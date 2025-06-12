@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Строительная компания — Надежность и Качество</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #fdf6f0, #e8ecef);
+            color: #2a2a2a;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            color: #ff6b35;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover,
+        a:focus {
+            color: #e3541c;
+            outline: none;
+        }
+
+        /* Контейнер */
+        .container {
+            max-width: 1200px;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        /* HEADER */
+        header {
+            background: rgba(255 255 255 / 0.85);
+            backdrop-filter: saturate(180%) blur(18px);
+            box-shadow: 0 4px 16px rgb(255 107 53 / 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 0;
+        }
+
+        .logo {
+            font-weight: 900;
+            font-size: 2rem;
+            color: #ff6b35;
+            letter-spacing: 0.05em;
+            user-select: none;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        nav ul li {
+            position: relative;
+        }
+
+        nav ul li a {
+            padding: 0.3rem 0;
+            display: inline-block;
+            transition: color 0.25s ease;
+        }
+
+        nav ul li a::after {
+            content: "";
+            position: absolute;
+            height: 2px;
+            width: 0;
+            left: 0;
+            bottom: -6px;
+            background: #ff6b35;
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after,
+        nav ul li a:focus::after {
+            width: 100%;
+        }
+
+        /* HERO */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 3rem;
+            padding: 6rem 0 6rem 0;
+            flex-wrap: wrap;
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeUp 0.9s ease forwards;
+            animation-delay: 0.3s;
+        }
+
+        .hero-text {
+            flex: 1 1 480px;
+            color: #382f2f;
+        }
+
+        .hero-text h1 {
+            font-weight: 900;
+            font-size: 3.4rem;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+
+        .hero-text p {
+            font-size: 1.25rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.85;
+            max-width: 520px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b35, #f03e00);
+            color: #fff;
+            padding: 1rem 2.5rem;
+            font-weight: 700;
+            font-size: 1.15rem;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            box-shadow: 0 8px 16px rgb(240 62 0 / 0.4);
+            transition: transform 0.3s ease, box-shadow 0.35s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            letter-spacing: 0.02em;
+            user-select: none;
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus {
+            box-shadow: 0 14px 26px rgb(240 62 0 / 0.6);
+            transform: translateY(-4px);
+            outline: none;
+        }
+
+        .hero-img {
+            flex: 1 1 480px;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 8px 8px 28px rgb(255 107 53 / 0.15);
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeUp 0.9s ease forwards;
+            animation-delay: 0.7s;
+        }
+
+        .hero-img img {
+            width: 100%;
+            height: 350px;
+            display: block;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            will-change: transform;
+        }
+
+        .hero-img:hover img {
+            transform: scale(1.05);
+        }
+
+        /* SERVICES (features) */
+        .services {
+            background: rgba(255 255 255 / 0.95);
+            border-radius: 20px;
+            box-shadow: 0 14px 42px rgb(255 107 53 / 0.12);
+            padding: 4rem 2rem 5rem;
+            margin-bottom: 5rem;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeUp 1s ease forwards;
+            animation-delay: 1s;
+        }
+
+        .services h2 {
+            font-weight: 900;
+            font-size: 2.6rem;
+            color: #ff6b35;
+            margin-bottom: 3rem;
+            letter-spacing: 0.05em;
+        }
+
+        .services-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem 3rem;
+        }
+
+        .service-item {
+            background: white;
+            flex: 1 1 280px;
+            max-width: 320px;
+            border-radius: 20px;
+            padding: 2rem 2.5rem;
+            box-shadow: 0 14px 38px -8px rgb(255 107 53 / 0.15);
+            transition: box-shadow 0.4s ease, transform 0.3s ease;
+            cursor: default;
+            user-select: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .service-item:hover,
+        .service-item:focus-within {
+            box-shadow: 0 24px 48px rgb(255 107 53 / 0.3);
+            transform: translateY(-8px);
+            outline: none;
+        }
+
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            fill: #ff6b35;
+            filter: drop-shadow(0 4px 4px rgb(255 107 53 / 0.3));
+            flex-shrink: 0;
+        }
+
+        .service-item h3 {
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: #3b2f27;
+        }
+
+        .service-item p {
+            color: #615553;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* ABOUT SECTION */
+        .about {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3.5rem;
+            align-items: center;
+            margin-bottom: 6rem;
+            padding-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeUp 1s ease forwards;
+            animation-delay: 1.3s;
+        }
+
+        .about-text {
+            background: rgba(255 255 255 / 0.9);
+            border-radius: 20px;
+            padding: 3rem 3.5rem;
+            box-shadow: 10px 10px 40px rgb(255 107 53 / 0.12);
+            color: #4e432f;
+            font-weight: 500;
+            font-size: 1.15rem;
+            line-height: 1.6;
+            letter-spacing: 0.02em;
+            user-select: text;
+            box-sizing: border-box;
+        }
+
+        .about-text h2 {
+            font-weight: 900;
+            color: #ff6b35;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            letter-spacing: 0.05em;
+        }
+
+        .about-img {
+            border-radius: 20px;
+            box-shadow: 14px 14px 50px rgb(255 107 53 / 0.17);
+            overflow: hidden;
+            transition: transform 0.5s ease;
+            will-change: transform;
+            cursor: default;
+        }
+
+        .about-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            width: 100%;
+            height: 270px;
+        }
+
+        .about-img:hover {
+            transform: scale(1.04);
+        }
+
+        /* CONTACT */
+        .contact {
+            background: linear-gradient(135deg, rgba(255, 107, 53, .15), rgba(240, 62, 0, .12));
+            border-radius: 20px;
+            padding: 4rem 3rem 5rem;
+            box-shadow: 0 20px 60px rgb(255 107 53 / 0.15);
+            margin-bottom: 4rem;
+        }
+
+        .contact h2 {
+            font-weight: 900;
+            font-size: 2.6rem;
+            color: #e3541c;
+            text-align: center;
+            margin-bottom: 3rem;
+            letter-spacing: 0.05em;
+        }
+
+        form {
+            max-width: 550px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: #2a2a2a;
+            user-select: none;
+        }
+
+        input,
+        textarea {
+            padding: 1rem 1.2rem;
+            font-size: 1rem;
+            border-radius: 14px;
+            border: 2px solid #ff6b35;
+            font-weight: 500;
+            color: #422f1f;
+            transition: border-color 0.35s ease, box-shadow 0.35s ease;
+            resize: vertical;
+            font-family: inherit;
+            user-select: text;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #cc8a67;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #f03e00;
+            box-shadow: 0 0 10px 2px rgb(240 62 0 / 0.5);
+        }
+
+        textarea {
+            min-height: 140px;
+        }
+
+        .btn-secondary {
+            background: #f03e00;
+            color: white;
+            padding: 1.1rem 3rem;
+            font-size: 1.15rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgb(240 62 0 / 0.45);
+            transition: background-color 0.3s ease, box-shadow 0.35s ease;
+            user-select: none;
+            align-self: center;
+            width: fit-content;
+        }
+
+        .btn-secondary:hover,
+        .btn-secondary:focus {
+            background-color: #e03b00;
+            box-shadow: 0 12px 28px rgb(224 59 0 / 0.6);
+            outline: none;
+            transform: translateY(-2px);
+        }
+
+        /* FOOTER */
+        footer {
+            background: #ff6b35;
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 1.6rem 0;
+            text-align: center;
+            user-select: none;
+            letter-spacing: 0.03em;
+            box-shadow: 0 -4px 20px rgb(255 107 53 / 0.3);
+        }
+
+        /* Анимация появления */
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 920px) {
+            header .container {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 0 1rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+                font-size: 1.1rem;
+            }
+
+            .hero {
+                flex-direction: column;
+                justify-content: center;
+                text-align: center;
+                padding: 4rem 1rem 4rem;
+            }
+
+            .hero-text,
+            .hero-img {
+                flex: none;
+                max-width: 100%;
+                opacity: 1 !important;
+                transform: none !important;
+                animation: none !important;
+            }
+
+            .hero-text h1 {
+                font-size: 2.4rem;
+                line-height: 1.2;
+                margin-bottom: 1.2rem;
+            }
+
+            .hero-text p {
+                font-size: 1.1rem;
+                max-width: 100%;
+                margin-bottom: 2rem;
+            }
+
+            .btn-primary {
+                width: 80%;
+                max-width: 320px;
+                padding: 1rem 0;
+                font-size: 1.1rem;
+            }
+
+            .services-list {
+                display: block;
+                padding: 0;
+            }
+
+            .service-item {
+                margin-bottom: 2.5rem;
+                max-width: 100%;
+                box-sizing: border-box;
+            }
+
+            .about {
+                display: block;
+                padding: 0 1rem;
+            }
+
+            .about-text {
+                padding: 2rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .about-img {
+                margin-top: 2rem;
+                width: 100%;
+                border-radius: 16px;
+                box-shadow: 12px 12px 40px rgb(255 107 53 / 0.15);
+                transform: none !important;
+                opacity: 1 !important;
+                animation: none !important;
+                overflow: hidden;
+            }
+
+            .contact {
+                padding: 3rem 1.5rem 4rem;
+                box-shadow: none;
+                border-radius: 16px;
+            }
+
+            form {
+                max-width: 100%;
+            }
+
+            input,
+            textarea {
+                font-size: 1rem;
+                padding: 0.9rem 1rem;
+            }
+
+            label {
+                font-size: 1rem;
+            }
+
+            .btn-secondary {
+                width: 100%;
+                max-width: 320px;
+                font-size: 1.1rem;
+                padding: 1rem 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-text h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero-text p {
+                font-size: 1rem;
+            }
+
+            nav ul {
+                font-size: 1rem;
+                gap: 0.75rem;
+            }
+
+            header .container {
+                padding: 0 0.8rem;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                max-width: 100%;
+            }
+        }
+
+        /* Конечное улучшение для телефонов с очень узкими экранами (320px и ниже) */
+        @media (max-width: 320px) {
+            .hero-text h1 {
+                font-size: 1.6rem;
+            }
+
+            nav ul li a {
+                padding: 0.25rem 0;
+            }
+
+            nav ul {
+                gap: 0.5rem;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                padding: 0.8rem 0;
+                font-size: 1rem;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">СТРОЙКОМФОРТ</div>
+            <nav>
+                <ul>
+                    <li><a href="#services">Услуги</a></li>
+                    <li><a href="#about">О компании</a></li>
+                    <li><a href="#contact">Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <section class="hero" aria-label="Главный экран">
+            <div class="hero-text">
+                <h1>Строим дома, в которые хочется возвращаться</h1>
+                <p>Опыт, качество и индивидуальный подход — от проекта до сдачи «под ключ».</p>
+                <button class="btn-primary"
+                    onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">
+                    Связаться с нами
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor"
+                        stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-arrow-right" style="margin-left:8px;" viewBox="0 0 24 24"
+                        aria-hidden="true">
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 12 19" />
+                    </svg>
+                </button>
+            </div>
+            <div class="hero-img" aria-hidden="true">
+                <img src="img\acetone-202545-172643-3771.png"
+                    alt="Современное строительство дома" loading="lazy" />
+            </div>
+        </section>
+
+        <section class="services" id="services" aria-label="Услуги компании">
+            <h2>Наши услуги</h2>
+            <div class="services-list">
+
+                <article class="service-item" tabindex="0" aria-labelledby="service1-title"
+                    aria-describedby="service1-desc">
+                    <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-hidden="true">
+                        <path d="M32 6L10 22v26h44V22L32 6z" stroke="#ff6b35" stroke-width="2" fill="none"
+                            stroke-linejoin="round" />
+                    </svg>
+                    <h3 id="service1-title">Строительство домов</h3>
+                    <p id="service1-desc">Надежное возведение домов любой сложности с современными стандартами.</p>
+                </article>
+
+                <article class="service-item" tabindex="0" aria-labelledby="service2-title"
+                    aria-describedby="service2-desc">
+                    <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-hidden="true">
+                        <circle cx="32" cy="32" r="14" stroke="#ff6b35" stroke-width="2" fill="none" />
+                        <path d="M46 46l6 6" stroke="#ff6b35" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                    <h3 id="service2-title">Ремонт и отделка</h3>
+                    <p id="service2-desc">Дизайн и ремонт интерьеров с вниманием к деталям и качеству.</p>
+                </article>
+
+                <article class="service-item" tabindex="0" aria-labelledby="service3-title"
+                    aria-describedby="service3-desc">
+                    <svg class="service-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-hidden="true">
+                        <rect x="14" y="20" width="36" height="24" stroke="#ff6b35" stroke-width="2" fill="none" rx="4"
+                            ry="4" />
+                        <path d="M32 44v8" stroke="#ff6b35" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                    <h3 id="service3-title">Проектирование</h3>
+                    <p id="service3-desc">Уникальные проекты домов с 3D-моделями и современным подходом.</p>
+                </article>
+
+            </div>
+        </section>
+
+        <section class="about" id="about" aria-label="Информация о компании">
+            <div class="about-text">
+                <h2>О компании</h2>
+                <p>«СтройКомфорт» — более 10 лет опыта строительных работ с индивидуальным подходом к каждому проекту.
+                    Мы гарантируем качество, срок сдачи и уютные дома, в которых рады жить.</p>
+            </div>
+            <div class="about-img" aria-hidden="true">
+                <img src="img\generated-image (1).png"
+                    alt="Команда строительной компании" loading="lazy" />
+            </div>
+        </section>
+
+        <section class="contact" id="contact" aria-label="Форма обратной связи">
+            <h2>Связаться с нами</h2>
+            <form id="contact-form" novalidate>
+                <label for="name">Имя</label>
+                <input type="text" id="name" name="name" placeholder="Ваше имя" required minlength="2"
+                    autocomplete="name" />
+
+                <label for="phone">Телефон</label>
+                <input type="tel" id="phone" name="phone" placeholder="+7 (___) ___-__-__"
+                    pattern="^\+7\s?\(?\d{3}\)?\s?\d{3}[-\s]?\d{2}[-\s]?\d{2}$" required autocomplete="tel" />
+
+                <label for="message">Сообщение</label>
+                <textarea id="message" name="message" placeholder="Ваше сообщение" rows="5"></textarea>
+
+                <button type="submit" class="btn-secondary">Отправить</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        &copy; 2025 СтройКомфорт. Все права защищены.
+    </footer>
+
+    <script>
+        // Валидация формы
+        const form = document.getElementById('contact-form');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            const name = form.name;
+            const phone = form.phone;
+
+            if (!name.value || name.value.length < 2) {
+                alert('Пожалуйста, введите корректное имя (минимум 2 символа).');
+                name.focus();
+                return;
+            }
+
+            const phonePattern = /^\+7\s?\(?\d{3}\)?\s?\d{3}[-\s]?\d{2}[-\s]?\d{2}$/;
+            if (!phonePattern.test(phone.value)) {
+                alert('Пожалуйста, введите корректный телефон в формате +7 (999) 999-99-99.');
+                phone.focus();
+                return;
+            }
+
+            alert('Спасибо за заявку! Мы свяжемся с вами в ближайшее время.');
+            form.reset();
+        });
+
+
+        document.querySelectorAll('nav a[href^="#"]').forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+
+                const targetId = link.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (!targetElement) return;
+
+                const elementRect = targetElement.getBoundingClientRect();
+                const absoluteElementTop = window.pageYOffset + elementRect.top;
+                const middleOfScreen = window.innerHeight / 2;
+                const scrollTo = absoluteElementTop - middleOfScreen + elementRect.height / 2;
+
+                window.scrollTo({
+                    top: scrollTo,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ювелирные украшения «LuxeGems»</title>
+    <style>
+        :root {
+            --color-gold: #bfa06e;
+            --color-dark: #1a1a1a;
+            --color-light: #f9f7f1;
+            --color-accent: #d4af37;
+            --font-primary: 'Playfair Display', serif;
+            --font-secondary: 'Montserrat', sans-serif;
+            --shadow-soft: rgba(0, 0, 0, 0.1);
+            --transition-speed: 0.4s;
+            --bg-color: var(--color-light);
+            --text-color: var(--color-dark);
+            --bg-hero-overlay: linear-gradient(180deg, rgba(26, 26, 26, 0.7) 0%, rgba(26, 26, 26, 0.85) 100%);
+            --input-bg: #2a2a2a;
+            --input-color: var(--color-light);
+            --input-placeholder: #bbb;
+            --footer-bg: #121212;
+            --footer-color: #888;
+        }
+
+        /* Тёмная тема */
+        body.dark {
+            --bg-color: var(--color-dark);
+            --text-color: var(--color-light);
+            --bg-hero-overlay: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.85) 100%);
+            --input-bg: #444444;
+            --input-color: var(--color-light);
+            --input-placeholder: #ccc;
+            --footer-bg: #0b0b0b;
+            --footer-color: #aaa;
+        }
+
+        /* Reset */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            scroll-behavior: smooth;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        a {
+            color: var(--color-gold);
+            text-decoration: none;
+            transition: color var(--transition-speed);
+        }
+
+        a:hover,
+        a:focus-visible {
+            color: var(--color-accent);
+            outline-offset: 3px;
+            outline: 2px solid var(--color-accent);
+        }
+
+        header {
+            background-color: var(--bg-color);
+            box-shadow: 0 2px 8px var(--shadow-soft);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.5s ease;
+        }
+
+        header h1 {
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 2rem;
+            letter-spacing: 3px;
+            color: var(--color-gold);
+            user-select: none;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            font-weight: 600;
+            font-size: 1rem;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--color-gold);
+            left: 0;
+            bottom: -4px;
+            transition: width var(--transition-speed);
+        }
+
+        nav a:hover::after,
+        nav a:focus-visible::after {
+            width: 100%;
+        }
+
+        /* Тема переключатель */
+        .theme-toggle {
+            background: none;
+            border: 2px solid var(--color-gold);
+            border-radius: 24px;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: var(--font-secondary);
+            color: var(--color-gold);
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            user-select: none;
+            align-self: center;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .theme-toggle:hover,
+        .theme-toggle:focus-visible {
+            background-color: var(--color-gold);
+            color: var(--color-dark);
+            border-color: var(--color-accent);
+            outline-offset: 3px;
+            outline: 2px solid var(--color-accent);
+        }
+
+        /* Hero */
+        .hero {
+            background: url('https://images.unsplash.com/photo-1556228724-1d32e8a5f8c5?auto=format&fit=crop&w=1470&q=80') center/cover no-repeat;
+            height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--color-light);
+            padding: 0 1.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.5s ease;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: var(--bg-hero-overlay);
+            z-index: 0;
+            transition: background-color 0.5s ease;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 640px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .hero-content.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero-content h2 {
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 3.6rem;
+            margin-bottom: 1rem;
+            letter-spacing: 3px;
+            text-shadow: 0 0 18px rgba(0, 0, 0, 0.8);
+            line-height: 1.1;
+        }
+
+        .hero-content p {
+            font-size: 1.45rem;
+            margin-bottom: 2.5rem;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+            font-weight: 500;
+            letter-spacing: 0.03em;
+        }
+
+        .btn-primary {
+            background-color: var(--color-gold);
+            color: var(--color-light);
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            border-radius: 40px;
+            cursor: pointer;
+            box-shadow: 0 8px 22px rgba(191, 160, 110, 0.75);
+            transition: background-color 0.4s ease, box-shadow 0.4s ease, transform 0.2s ease;
+            user-select: none;
+            will-change: transform;
+            letter-spacing: 0.05em;
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus-visible {
+            background-color: var(--color-accent);
+            box-shadow: 0 10px 28px rgba(212, 175, 55, 0.95);
+            outline-offset: 4px;
+            outline: 3px solid var(--color-accent);
+            transform: scale(1.07);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        /* Features */
+        .features {
+            background-color: var(--bg-color);
+            padding: 5rem 2rem 6rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3.5rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            transition: background-color 0.5s ease;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 1.8rem 2.2rem;
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(191, 160, 110, 0.15);
+            background-color: #fffbea;
+            transition: box-shadow 0.4s ease, transform 0.4s ease;
+            opacity: 0;
+            transform: translateY(40px);
+            will-change: transform, opacity;
+            cursor: default;
+        }
+
+        body.dark .feature-item {
+            background-color: #2a2a2a;
+            box-shadow: 0 6px 18px rgba(212, 175, 55, 0.3);
+        }
+
+        .feature-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-item:hover,
+        .feature-item:focus-within {
+            box-shadow: 0 10px 30px rgba(191, 160, 110, 0.35);
+            transform: translateY(-6px);
+        }
+
+        .feature-icon {
+            width: 72px;
+            height: 72px;
+            margin-bottom: 1.25rem;
+            fill: var(--color-gold);
+            transition: fill 0.6s ease;
+            filter: drop-shadow(0 0 4px rgba(191, 160, 110, 0.7));
+        }
+
+        body.dark .feature-icon {
+            filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.9));
+        }
+
+        .feature-item:hover .feature-icon,
+        .feature-item:focus-within .feature-icon {
+            fill: var(--color-accent);
+            filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.9));
+        }
+
+        .feature-item h3 {
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 1.6rem;
+            margin-bottom: 0.6rem;
+            color: var(--text-color);
+            transition: color 0.5s ease;
+        }
+
+        .feature-item p {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.4;
+            transition: color 0.5s ease;
+        }
+
+        body.dark .feature-item p {
+            color: #ccc;
+        }
+
+        /* Gallery */
+        .gallery {
+            padding: 4rem 1rem 6rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.8rem;
+            transition: background-color 0.5s ease;
+        }
+
+        .gallery img {
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            cursor: pointer;
+            will-change: transform, box-shadow;
+            opacity: 0;
+            transform: translateY(30px);
+            border: 3px solid transparent;
+        }
+
+        .gallery img.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gallery img:hover,
+        .gallery img:focus-visible {
+            transform: scale(1.08);
+            box-shadow: 0 14px 32px rgba(212, 175, 55, 0.6);
+            border-color: var(--color-gold);
+            outline-offset: 4px;
+            outline: 3px solid var(--color-gold);
+            z-index: 10;
+            position: relative;
+        }
+
+        /* Subscribe */
+        .subscribe {
+            background-color: var(--color-dark);
+            color: var(--color-light);
+            padding: 4rem 1rem 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        .subscribe h2 {
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 2.4rem;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .subscribe h2.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .subscribe p {
+            max-width: 600px;
+            margin: 0 auto 1.8rem;
+            font-size: 1.25rem;
+            color: #ccc;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+        }
+
+        .subscribe p.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            max-width: 480px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+        }
+
+        form.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        input[type="email"],
+        input[type="text"],
+        textarea {
+            flex: 1 1 250px;
+            padding: 0.65rem 1.2rem;
+            font-size: 1.1rem;
+            border-radius: 40px;
+            border: none;
+            outline: none;
+            box-shadow: inset 0 0 8px rgba(255 255 255 / 0.25);
+            transition: box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+            background-color: var(--input-bg);
+            color: var(--input-color);
+            font-weight: 500;
+            user-select: text;
+            font-family: var(--font-secondary);
+        }
+
+        input[type="text"],
+        input[type="email"] {
+            flex: 0;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: var(--input-placeholder);
+            font-style: italic;
+        }
+
+        input[type="email"]:focus,
+        input[type="text"]:focus,
+        textarea:focus {
+            box-shadow: 0 0 12px var(--color-gold);
+            background-color: #3b3b3b;
+            color: var(--color-light);
+        }
+
+        textarea {
+            border-radius: 20px;
+            resize: vertical;
+        }
+
+        button[type="submit"] {
+            background-color: var(--color-gold);
+            border: none;
+            border-radius: 40px;
+            padding: 0.75rem 2.8rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--color-dark);
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(191, 160, 110, 0.7);
+            transition: background-color 0.4s ease, box-shadow 0.4s ease, transform 0.2s ease;
+            user-select: none;
+            will-change: transform;
+        }
+
+        button[type="submit"]:hover,
+        button[type="submit"]:focus-visible {
+            background-color: var(--color-accent);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.9);
+            outline-offset: 4px;
+            outline: 3px solid var(--color-accent);
+            transform: scale(1.05);
+        }
+
+        button[type="submit"]:active {
+            transform: scale(0.98);
+        }
+
+        /* Success message */
+        .success-message {
+            margin-top: 1rem;
+            font-weight: 600;
+            color: var(--color-accent);
+            font-size: 1.1rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            user-select: none;
+        }
+
+        .success-message.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Reviews */
+        .reviews {
+            background-color: var(--bg-color);
+            max-width: 1100px;
+            margin: 0 auto 6rem;
+            padding: 4rem 2rem;
+            transition: background-color 0.5s ease;
+        }
+
+        .reviews h2 {
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 2.8rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--text-color);
+            transition: color 0.5s ease;
+        }
+
+        .review-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.8rem;
+        }
+
+        .review-item {
+            background-color: #fffbea;
+            border-radius: 18px;
+            padding: 1.8rem 2rem;
+            box-shadow: 0 6px 18px rgba(191, 160, 110, 0.15);
+            font-style: italic;
+            color: #333;
+            transition: background-color 0.5s ease, color 0.5s ease;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        body.dark .review-item {
+            background-color: #2a2a2a;
+            color: #ddd;
+            box-shadow: 0 6px 18px rgba(212, 175, 55, 0.3);
+        }
+
+        .review-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .review-text {
+            margin-bottom: 1.2rem;
+            line-height: 1.5;
+            font-size: 1.1rem;
+            user-select: text;
+        }
+
+        .review-author {
+            font-weight: 700;
+            font-family: var(--font-primary);
+            font-size: 1.15rem;
+            text-align: right;
+            color: var(--color-gold);
+            user-select: none;
+            transition: color 0.5s ease;
+        }
+
+        body.dark .review-author {
+            color: var(--color-accent);
+        }
+
+        /* Contacts */
+        .contacts {
+            background-color: var(--bg-color);
+            max-width: 1100px;
+            margin: 0 auto 4rem;
+            padding: 4rem 2rem 6rem;
+            transition: background-color 0.5s ease;
+        }
+
+        .contacts h2 {
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 2.8rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--text-color);
+            transition: color 0.5s ease;
+        }
+
+        .contacts-container {
+            display: flex;
+            gap: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .contact-info {
+            flex: 1 1 320px;
+            font-size: 1.1rem;
+            color: var(--text-color);
+            user-select: text;
+            transition: color 0.5s ease;
+        }
+
+        .contact-info h3 {
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: var(--color-gold);
+            transition: color 0.5s ease;
+        }
+
+        body.dark .contact-info h3 {
+            color: var(--color-accent);
+        }
+
+        .contact-info p {
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .contact-form {
+            flex: 1 1 320px;
+        }
+
+        .contact-form form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .contact-form button[type="submit"] {
+            align-self: center;
+            padding: 0.85rem 3rem;
+            font-size: 1.25rem;
+            border-radius: 40px;
+        }
+
+        /* Уменьшенная высота инпутов и textarea в контактах */
+        input[type="text"],
+        input[type="email"] {
+            height: 36px;
+        }
+
+        textarea {
+            min-height: 36px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-color);
+            text-align: center;
+            padding: 1.2rem 1rem;
+            font-size: 0.9rem;
+            user-select: none;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .hero-content h2 {
+                font-size: 2.6rem;
+            }
+
+            .features {
+                padding: 3rem 1rem 4rem;
+            }
+
+            form {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            input[type="email"],
+            input[type="text"],
+            textarea,
+            button[type="submit"] {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .contacts-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-info,
+            .contact-form {
+                flex: 1 1 100%;
+                max-width: 480px;
+            }
+        }
+    </style>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body>
+    <header role="banner">
+        <h1>LuxeGems</h1>
+        <nav role="navigation" aria-label="Главное меню">
+            <ul>
+                <li><a href="#features">Преимущества</a></li>
+                <li><a href="#gallery">Галерея</a></li>
+                <li><a href="#reviews">Отзывы</a></li>
+                <li><a href="#contacts">Контакты</a></li>
+                <li><a href="#subscribe">Подписка</a></li>
+            </ul>
+        </nav>
+        <button class="theme-toggle" aria-label="Переключить тему" title="Переключить светлую/тёмную тему"
+            aria-pressed="false">
+            🌞 Светлая
+        </button>
+    </header>
+
+    <main>
+        <section class="hero" aria-label="Главный баннер с ювелирными украшениями">
+            <div class="hero-content">
+                <h2>Изысканные украшения, которые подчеркнут вашу индивидуальность</h2>
+                <p>Коллекции из золота, серебра и драгоценных камней с уникальным дизайном</p>
+                <button class="btn-primary" type="button" aria-label="Посмотреть коллекцию ювелирных украшений"
+                    onclick="alert('Спасибо за интерес!')">Посмотреть коллекцию</button>
+            </div>
+        </section>
+
+        <section id="features" class="features" aria-label="Преимущества ювелирных украшений LuxeGems">
+            <article class="feature-item" tabindex="0" aria-labelledby="feature1-title"
+                aria-describedby="feature1-desc">
+                <svg class="feature-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                    <path d="M32 2L12 22l20 20 20-20L32 2z" />
+                    <circle cx="32" cy="32" r="6" fill="none" stroke="currentColor" stroke-width="3" />
+                </svg>
+                <h3 id="feature1-title">Высокое качество</h3>
+                <p id="feature1-desc">Только лучшие материалы и мастерство для долговечности и блеска.</p>
+            </article>
+
+            <article class="feature-item" tabindex="0" aria-labelledby="feature2-title"
+                aria-describedby="feature2-desc">
+                <svg class="feature-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                    <path d="M32 12a20 20 0 1 0 0 40 20 20 0 0 0 0-40z" />
+                    <path d="M32 20v24M20 32h24" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                </svg>
+                <h3 id="feature2-title">Уникальный дизайн</h3>
+                <p id="feature2-desc">Каждое украшение — произведение искусства, созданное с душой.</p>
+            </article>
+
+            <article class="feature-item" tabindex="0" aria-labelledby="feature3-title"
+                aria-describedby="feature3-desc">
+                <svg class="feature-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                    <circle cx="32" cy="32" r="28" fill="none" stroke="currentColor" stroke-width="4" />
+                    <path d="M32 12v20l16 8" stroke="currentColor" stroke-width="4" stroke-linecap="round" />
+                </svg>
+                <h3 id="feature3-title">Быстрая доставка</h3>
+                <p id="feature3-desc">Доставляем ваши украшения аккуратно и в кратчайшие сроки.</p>
+            </article>
+        </section>
+
+        <section id="gallery" class="gallery" aria-label="Галерея ювелирных украшений">
+            <img src="img\generated-image.png"    tabindex="0" />
+            <img src="img\generated-image (1).png"    tabindex="0" />
+            <img src="img\generated-image (2).png"    tabindex="0" />
+            <img src="img\generated-image (3).png"    tabindex="0" />
+            <img src="img\generated-image (4).png"    tabindex="0" />
+            <img src="img\generated-image (5).png"    tabindex="0" />
+            <img src="img\generated-image (6).png"    tabindex="0" />
+            <img src="img\generated-image (7).png"    tabindex="0" />
+            <img src="img\generated-image (8).png"    tabindex="0" />
+        </section>
+
+        <section id="reviews" class="reviews" aria-label="Отзывы клиентов LuxeGems">
+            <h2>Отзывы наших клиентов</h2>
+            <div class="review-list">
+                <article class="review-item" tabindex="0">
+                    <p class="review-text">«Заказывала кольцо с бриллиантом — качество превзошло ожидания! Спасибо за
+                        отличный сервис.»</p>
+                    <p class="review-author">— Мария К.</p>
+                </article>
+                <article class="review-item" tabindex="0">
+                    <p class="review-text">«Очень довольна серьгами. Уникальный дизайн и быстрая доставка. Рекомендую!»
+                    </p>
+                    <p class="review-author">— Алексей П.</p>
+                </article>
+                <article class="review-item" tabindex="0">
+                    <p class="review-text">«Покупала браслет в подарок — получатель был в восторге. Спасибо за качество
+                        и внимание к деталям.»</p>
+                    <p class="review-author">— Елена С.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="contacts" class="contacts" aria-label="Контактная информация и форма обратной связи LuxeGems">
+            <h2>Свяжитесь с нами</h2>
+            <div class="contacts-container">
+                <div class="contact-info" tabindex="0">
+                    <h3>Наш адрес</h3>
+                    <p>г. Москва, ул. Ювелирная, 12</p>
+                    <h3>Телефон</h3>
+                    <p><a href="tel:+74951234567" aria-label="Позвонить по телефону +7 495 123-45-67">+7 (495)
+                            123-45-67</a></p>
+                    <h3>Email</h3>
+                    <p><a href="mailto:info@luxegems.ru"
+                            aria-label="Написать email info@luxegems.ru">info@luxegems.ru</a></p>
+                    <h3>Часы работы</h3>
+                    <p>Пн-Пт: 10:00 – 19:00<br />Сб-Вс: выходной</p>
+                </div>
+                <div class="contact-form">
+                    <form novalidate aria-live="polite" aria-atomic="true">
+                        <input type="text" id="contactName" name="name" placeholder="Ваше имя" required aria-label="Имя"
+                            autocomplete="name" />
+                        <input type="email" id="contactEmail" name="email" placeholder="Ваш email" required
+                            aria-label="Электронная почта" autocomplete="email" />
+                        <textarea id="contactMessage" name="message" placeholder="Ваше сообщение" required
+                            aria-label="Сообщение" minlength="10"></textarea>
+                        <button type="submit" aria-label="Отправить сообщение">Отправить</button>
+                    </form>
+                    <div class="success-message" role="alert" aria-live="assertive"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="subscribe" class="subscribe" aria-label="Подписка на новости и акции">
+            <h2>Подпишитесь на новости LuxeGems</h2>
+            <p>Будьте в курсе эксклюзивных предложений и новых коллекций.</p>
+            <form novalidate aria-live="polite" aria-atomic="true">
+                <input type="email" id="subscribeEmail" name="email" placeholder="Введите ваш email" required
+                    aria-label="Электронная почта" autocomplete="email" />
+                <button type="submit" aria-label="Подписаться на рассылку">Подписаться</button>
+            </form>
+            <div class="success-message" role="alert" aria-live="assertive"></div>
+        </section>
+    </main>
+
+    <footer role="contentinfo">
+        &copy; 2025 LuxeGems. Все права защищены.
+    </footer>
+
+    <script>
+        // Анимация появления при скролле
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                threshold: 0.15
+            };
+
+            const revealElements = document.querySelectorAll('.hero-content, .feature-item, .gallery img, #subscribe h2, #subscribe p, #subscribe form, .review-item, #reviews h2, #contacts h2, .contact-info, .contact-form form');
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            revealElements.forEach(el => observer.observe(el));
+        });
+
+        // Форма подписки с валидацией и сообщением
+        const subscribeForm = document.querySelector('#subscribe form');
+        const subscribeEmailInput = subscribeForm.querySelector('input[type="email"]');
+        const subscribeSuccessMessage = document.querySelector('#subscribe .success-message');
+
+        subscribeForm.addEventListener('submit', e => {
+            e.preventDefault();
+            subscribeSuccessMessage.textContent = '';
+            if (!subscribeEmailInput.validity.valid) {
+                subscribeEmailInput.focus();
+                subscribeSuccessMessage.textContent = 'Пожалуйста, введите корректный email.';
+                subscribeSuccessMessage.style.color = '#e74c3c'; // красный для ошибки
+                subscribeSuccessMessage.classList.add('visible');
+                return;
+            }
+            // Имитация отправки
+            subscribeSuccessMessage.textContent = 'Спасибо за подписку!';
+            subscribeSuccessMessage.style.color = 'var(--color-accent)';
+            subscribeSuccessMessage.classList.add('visible');
+            subscribeForm.reset();
+            subscribeEmailInput.focus();
+        });
+
+        // Форма контактов с валидацией и сообщением
+        const contactForm = document.querySelector('.contact-form form');
+        const contactName = contactForm.querySelector('input[name="name"]');
+        const contactEmail = contactForm.querySelector('input[name="email"]');
+        const contactMessage = contactForm.querySelector('textarea[name="message"]');
+        const contactSuccessMessage = document.querySelector('.contact-form .success-message');
+
+        contactForm.addEventListener('submit', e => {
+            e.preventDefault();
+            contactSuccessMessage.textContent = '';
+            if (!contactName.value.trim()) {
+                contactName.focus();
+                contactSuccessMessage.textContent = 'Пожалуйста, введите ваше имя.';
+                contactSuccessMessage.style.color = '#e74c3c';
+                contactSuccessMessage.classList.add('visible');
+                return;
+            }
+            if (!contactEmail.validity.valid) {
+                contactEmail.focus();
+                contactSuccessMessage.textContent = 'Пожалуйста, введите корректный email.';
+                contactSuccessMessage.style.color = '#e74c3c';
+                contactSuccessMessage.classList.add('visible');
+                return;
+            }
+            if (contactMessage.value.trim().length < 10) {
+                contactMessage.focus();
+                contactSuccessMessage.textContent = 'Сообщение должно содержать минимум 10 символов.';
+                contactSuccessMessage.style.color = '#e74c3c';
+                contactSuccessMessage.classList.add('visible');
+                return;
+            }
+            // Имитация отправки
+            contactSuccessMessage.textContent = 'Спасибо за ваше сообщение! Мы свяжемся с вами в ближайшее время.';
+            contactSuccessMessage.style.color = 'var(--color-accent)';
+            contactSuccessMessage.classList.add('visible');
+            contactForm.reset();
+            contactName.focus();
+        });
+
+        // Переключатель темы
+        const themeToggleBtn = document.querySelector('.theme-toggle');
+        const body = document.body;
+
+        function setTheme(darkMode) {
+            if (darkMode) {
+                body.classList.add('dark');
+                themeToggleBtn.textContent = '🌙 Тёмная';
+                themeToggleBtn.setAttribute('aria-pressed', 'true');
+                themeToggleBtn.setAttribute('title', 'Переключить на светлую тему');
+            } else {
+                body.classList.remove('dark');
+                themeToggleBtn.textContent = '🌞 Светлая';
+                themeToggleBtn.setAttribute('aria-pressed', 'false');
+                themeToggleBtn.setAttribute('title', 'Переключить на тёмную тему');
+            }
+            localStorage.setItem('theme', darkMode ? 'dark' : 'light');
+        }
+
+        // Инициализация темы из localStorage или системных настроек
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            setTheme(true);
+        } else if (savedTheme === 'light') {
+            setTheme(false);
+        } else {
+            // Автоматический выбор по prefers-color-scheme
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            setTheme(prefersDark);
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            const isDark = body.classList.contains('dark');
+            setTheme(!isDark);
+        });
+    </script>
+</body>
+
+</html>

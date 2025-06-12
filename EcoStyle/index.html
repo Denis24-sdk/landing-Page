@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EcoStyle — Экологичные аксессуары</title>
+    <meta name="description"
+        content="Экологичные аксессуары из натуральных материалов — эко-сумки, часы из бамбука, блокноты из переработанной бумаги. Закажите сейчас!" />
+    <meta name="keywords" content="экологичные аксессуары, эко-сумки, бамбуковые часы, блокноты, экологичный стиль" />
+    <meta name="author" content="EcoStyle" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans&display=swap"
+        rel="stylesheet" />
+    <style>
+        /* CSS Variables для темы */
+        :root {
+            --color-primary: #3a886d;
+            --color-primary-dark: #2c6b52;
+            --color-bg: #f5faf7;
+            --color-text: #2f3e46;
+            --color-text-light: #556b63;
+            --color-white: #f0f4f3;
+            --shadow-light: rgba(58, 136, 109, 0.15);
+            --shadow-medium: rgba(58, 136, 109, 0.35);
+            --shadow-strong: rgba(44, 107, 82, 0.5);
+        }
+
+        /* Reset */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            scroll-behavior: smooth;
+        }
+
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+            transition: color 0.25s ease;
+        }
+
+        a:hover,
+        a:focus {
+            color: var(--color-primary-dark);
+            outline: none;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            background: rgba(58, 136, 109, 0.9);
+            backdrop-filter: saturate(180%) blur(10px);
+            padding: 1rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px var(--shadow-light);
+        }
+
+        header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--color-white);
+            letter-spacing: 2px;
+        }
+
+        /* Сброс для ul */
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Хедер */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(58, 136, 109, 0.85);
+            backdrop-filter: saturate(180%) blur(12px);
+            padding: 1rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1100;
+            box-shadow: 0 2px 12px var(--shadow-light);
+            transition: background-color 0.3s ease;
+            padding-bottom: 1rem;
+            /* добавляем отступ снизу */
+            box-sizing: border-box;
+        }
+
+        /* При скролле — чуть темнее */
+        header.scrolled {
+            background: rgba(44, 107, 82, 0.95);
+            box-shadow: 0 2px 15px var(--shadow-strong);
+        }
+
+        header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--color-white);
+            letter-spacing: 2px;
+            user-select: none;
+        }
+
+        /* Навигация */
+        nav a {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--color-white);
+            padding: 0.5rem 0.25rem;
+            border-radius: 8px;
+            transition: background-color 0.25s ease, color 0.25s ease;
+            user-select: none;
+        }
+
+        nav a:hover,
+        nav a:focus-visible {
+            background-color: var(--color-primary-dark);
+            color: #d4f1e4;
+            outline-offset: 3px;
+            outline: 2px solid #d4f1e4;
+        }
+
+        /* Кнопка-бургер */
+        #navToggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.25rem;
+            width: 36px;
+            height: 36px;
+            position: relative;
+            z-index: 1200;
+        }
+
+        #navToggle .hamburger,
+        #navToggle .hamburger::before,
+        #navToggle .hamburger::after {
+            content: "";
+            display: block;
+            background-color: var(--color-white);
+            height: 3px;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            position: absolute;
+            width: 24px;
+            left: 6px;
+        }
+
+        #navToggle .hamburger {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        #navToggle .hamburger::before {
+            top: -8px;
+        }
+
+        #navToggle .hamburger::after {
+            top: 8px;
+        }
+
+        /* При открытом меню — анимация крестика */
+        #navToggle[aria-expanded="true"] .hamburger {
+            background-color: transparent;
+        }
+
+        #navToggle[aria-expanded="true"] .hamburger::before {
+            transform: rotate(45deg);
+            top: 0;
+        }
+
+        #navToggle[aria-expanded="true"] .hamburger::after {
+            transform: rotate(-45deg);
+            top: 0;
+        }
+
+        /* Мобильная навигация */
+        @media (max-width: 768px) {
+            nav {
+                position: fixed;
+                top: 64px;
+                right: 0;
+                background: var(--color-primary);
+                width: 220px;
+                height: calc(100vh - 64px);
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+                box-shadow: -4px 0 15px var(--shadow-strong);
+                border-radius: 0 0 0 20px;
+                padding-top: 2rem;
+            }
+
+            nav.open {
+                transform: translateX(0);
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 1.5rem;
+                padding-left: 1.5rem;
+            }
+
+            nav a {
+                font-size: 1.2rem;
+                color: var(--color-white);
+            }
+
+            #navToggle {
+                display: block;
+            }
+        }
+
+
+
+        main {
+            max-width: 1200px;
+            margin: 3rem auto 5rem;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-bottom: 5rem;
+        }
+
+        .hero-text {
+            flex: 1 1 500px;
+            max-width: 600px;
+        }
+
+        .hero-text h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--color-text);
+            line-height: 1.1;
+        }
+
+        .hero-text p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            color: var(--color-text-light);
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: var(--color-white);
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 1.15rem;
+            font-weight: 700;
+            border-radius: 40px;
+            cursor: pointer;
+            box-shadow: 0 6px 15px var(--shadow-medium);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.15s ease;
+            user-select: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus {
+            background: var(--color-primary-dark);
+            box-shadow: 0 8px 20px var(--shadow-strong);
+            outline: none;
+            transform: scale(1.05);
+        }
+
+        .hero-img {
+            flex: 1 1 450px;
+            max-width: 500px;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px var(--shadow-light);
+            transition: transform 0.4s ease;
+        }
+
+        .hero-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        .hero-img:hover,
+        .hero-img:focus-within {
+            transform: scale(1.05);
+        }
+
+        /* Features Section */
+        section.features {
+            display: flex;
+            gap: 2rem;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 6rem;
+        }
+
+        .feature-card {
+            background: rgba(255 255 255 / 0.75);
+            backdrop-filter: saturate(180%) blur(20px);
+            border-radius: 20px;
+            box-shadow: 0 8px 30px var(--shadow-light);
+            flex: 1 1 280px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            cursor: default;
+        }
+
+        .feature-card:hover,
+        .feature-card:focus-within {
+            box-shadow: 0 15px 40px var(--shadow-medium);
+            outline: none;
+            transform: translateY(-5px);
+        }
+
+        .feature-card img {
+            width: 70px;
+            margin-bottom: 1.25rem;
+            filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.05));
+        }
+
+        .feature-card h3 {
+            color: var(--color-primary);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.35rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: var(--color-text-light);
+            font-size: 1rem;
+        }
+
+        /* Forms Section */
+        section.forms {
+            max-width: 900px;
+            margin: 0 auto 6rem;
+            display: flex;
+            gap: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        form {
+            background: rgba(255 255 255 / 0.85);
+            backdrop-filter: saturate(180%) blur(15px);
+            border-radius: 20px;
+            padding: 2rem 2.5rem;
+            box-shadow: 0 8px 30px var(--shadow-light);
+            flex: 1 1 400px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        form h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-text);
+            text-align: center;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: var(--color-primary);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        select,
+        textarea {
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            border: 1.5px solid #a2b9a1;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            transition: border-color 0.25s ease;
+            font-family: inherit;
+            resize: vertical;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--color-primary);
+            outline: none;
+        }
+
+        textarea {
+            min-height: 100px;
+        }
+
+        /* Ошибки */
+        .error-message {
+            position: absolute;
+            bottom: 10px;
+            left: 2.5rem;
+            font-size: 0.85rem;
+            color: #e55353;
+            font-weight: 600;
+            user-select: none;
+        }
+
+        button[type="submit"] {
+            background: var(--color-primary);
+            color: var(--color-white);
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: none;
+            padding: 1rem 0;
+            border-radius: 40px;
+            cursor: pointer;
+            box-shadow: 0 6px 15px var(--shadow-medium);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.15s ease;
+            user-select: none;
+            margin-top: auto;
+        }
+
+        button[type="submit"]:hover:not(:disabled),
+        button[type="submit"]:focus:not(:disabled) {
+            background: var(--color-primary-dark);
+            box-shadow: 0 8px 20px var(--shadow-strong);
+            outline: none;
+            transform: scale(1.05);
+        }
+
+        button[type="submit"]:disabled {
+            background: #a2b9a1;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        /* Comments Section */
+        section.comments {
+            max-width: 900px;
+            margin: 0 auto 6rem;
+        }
+
+        section.comments h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--color-text);
+            text-align: center;
+        }
+
+        .comment-list {
+            list-style: none;
+            margin-bottom: 3rem;
+        }
+
+        .comment-list li {
+            background: rgba(255 255 255 / 0.85);
+            backdrop-filter: saturate(180%) blur(15px);
+            border-radius: 15px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 6px 20px var(--shadow-light);
+        }
+
+        .comment-list li strong {
+            color: var(--color-primary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-list li p {
+            color: var(--color-text-light);
+            font-size: 1rem;
+            white-space: pre-line;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-text);
+            color: #a7b8af;
+            text-align: center;
+            padding: 1.5rem 1rem;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            user-select: none;
+        }
+
+        footer a {
+            color: #a7b8af;
+            margin: 0 0.5rem;
+            font-size: 1.3rem;
+            vertical-align: middle;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover,
+        footer a:focus {
+            color: var(--color-primary);
+            outline: none;
+        }
+
+        /* Scroll to top button */
+        #scrollTopBtn {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            background: var(--color-primary);
+            border: none;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            cursor: pointer;
+            box-shadow: 0 6px 15px var(--shadow-medium);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-white);
+            font-size: 1.5rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            user-select: none;
+            z-index: 10000;
+        }
+
+        #scrollTopBtn.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #scrollTopBtn:hover,
+        #scrollTopBtn:focus {
+            background: var(--color-primary-dark);
+            outline: none;
+            box-shadow: 0 8px 20px var(--shadow-strong);
+            transform: scale(1.1);
+        }
+
+        /* Quick contact launcher */
+        #contactLauncher {
+            position: fixed;
+            bottom: 100px;
+            right: 40px;
+            background: var(--color-primary);
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            box-shadow: 0 6px 15px var(--shadow-medium);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-white);
+            font-size: 1.8rem;
+            z-index: 10000;
+            user-select: none;
+            transition: background-color 0.3s ease, transform 0.15s ease;
+        }
+
+        #contactLauncher:hover,
+        #contactLauncher:focus {
+            background: var(--color-primary-dark);
+            outline: none;
+            transform: scale(1.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-text h2 {
+                font-size: 2.2rem;
+                margin-top: 20px;
+                line-height: 0.9;
+            }
+
+            .hero {
+                flex-direction: column-reverse;
+                text-align: center;
+            }
+
+            .hero-text,
+            .hero-img {
+                max-width: 100%;
+                flex: none;
+            }
+
+            section.features {
+                justify-content: center;
+            }
+
+            .feature-card {
+                max-width: 320px;
+            }
+
+            section.forms {
+                flex-direction: column;
+                gap: 3rem;
+            }
+
+            form {
+                max-width: 100%;
+            }
+
+            #scrollTopBtn,
+            #contactLauncher {
+                right: 20px;
+                bottom: 20px;
+            }
+
+            #contactLauncher {
+                bottom: 80px;
+            }
+        }
+
+        /* Scroll reveal animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+        .social-link {
+            color: #a7b8af;
+            transition: color 0.3s ease;
+            vertical-align: middle;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-link:hover,
+        .social-link:focus-visible {
+            color: var(--color-primary);
+            outline-offset: 3px;
+            outline: 2px solid var(--color-primary);
+            border-radius: 6px;
+        }
+
+
+
+        main {
+            margin-top: 200px;
+        }
+
+
+        #subscribeEmail {
+            margin: -45px auto 15px;
+            min-height: 36px;
+            height: 36px;
+            padding: 0.4rem 0.75rem;
+            font-size: 1rem;
+            border-radius: 6px;
+            border: 1.5px solid var(--color-primary);
+            transition: border-color 0.3s ease;
+        }
+
+        #subscribeEmail:focus {
+            border-color: var(--color-primary-dark);
+            outline: none;
+            box-shadow: 0 0 6px var(--color-primary);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header role="banner" id="header">
+        <h1>EcoStyle</h1>
+        <button id="navToggle" aria-controls="primaryNav" aria-expanded="false" aria-label="Открыть меню">
+            <span class="hamburger"></span>
+        </button>
+        <nav role="navigation" aria-label="Основное меню" id="primaryNav">
+            <ul>
+                <li><a href="#features" tabindex="0">Преимущества</a></li>
+                <li><a href="#orderForm" tabindex="0">Заказать</a></li>
+                <li><a href="#comments" tabindex="0">Отзывы</a></li>
+                <li><a href="#subscribeForm" tabindex="0">Подписка</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <main>
+        <section class="hero fade-in" tabindex="0" aria-label="Вступительный блок">
+            <div class="hero-text">
+                <h2>Экологичные аксессуары для современного образа жизни</h2>
+                <p>Стильные и устойчивые аксессуары из натуральных материалов, которые заботятся о планете и вашем
+                    комфорте.</p>
+                <button class="btn-primary" id="btnOrder" aria-describedby="orderDesc"
+                    aria-label="Перейти к форме заказа">
+                    Заказать сейчас
+                    <svg aria-hidden="true" focusable="false" width="20" height="20" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14M13 5l7 7-7 7" />
+                    </svg>
+                </button>
+                <p id="orderDesc" class="sr-only">Нажмите, чтобы перейти к форме заказа</p>
+            </div>
+            <div class="hero-img" tabindex="0" aria-label="Изображение экологичных аксессуаров">
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80"
+                    srcset="
+             https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=300&q=80 300w,
+             https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80 600w"
+                    sizes="(max-width: 600px) 100vw, 600px" alt="Экологичные аксессуары" loading="lazy" />
+            </div>
+        </section>
+
+        <section id="features" class="features fade-in" tabindex="0" aria-label="Преимущества">
+            <article class="feature-card" tabindex="0" role="article" aria-labelledby="feature1-title"
+                aria-describedby="feature1-desc">
+                <img src="https://img.icons8.com/ios-filled/100/3a886d/leaf.png" alt="" aria-hidden="true" />
+                <h3 id="feature1-title">Натуральные материалы</h3>
+                <p id="feature1-desc">Мы используем только экологически чистые и возобновляемые материалы, чтобы
+                    минимизировать вред природе.</p>
+            </article>
+            <article class="feature-card" tabindex="0" role="article" aria-labelledby="feature2-title"
+                aria-describedby="feature2-desc">
+                <img src="https://img.icons8.com/ios-filled/100/3a886d/recycle.png" alt="" aria-hidden="true" />
+                <h3 id="feature2-title">Переработка</h3>
+                <p id="feature2-desc">Все упаковки и аксессуары подлежат переработке, поддерживая концепцию нулевых
+                    отходов.</p>
+            </article>
+            <article class="feature-card" tabindex="0" role="article" aria-labelledby="feature3-title"
+                aria-describedby="feature3-desc">
+                <img src="https://img.icons8.com/ios-filled/100/3a886d/handshake.png" alt="" aria-hidden="true" />
+                <h3 id="feature3-title">Честное производство</h3>
+                <p id="feature3-desc">Сотрудничаем только с проверенными поставщиками, обеспечивая справедливые условия
+                    труда.</p>
+            </article>
+        </section>
+
+        <section class="forms" aria-label="Формы взаимодействия с пользователем">
+            <!-- Заказ -->
+            <form id="orderForm" class="fade-in" tabindex="0" aria-label="Форма заказа">
+                <h2>Заказать аксессуары</h2>
+
+                <label for="name">Имя</label>
+                <input type="text" id="name" name="name" required autocomplete="name" placeholder="Ваше имя"
+                    aria-required="true" aria-describedby="nameError" />
+                <span id="nameError" class="error-message" aria-live="polite"></span>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required autocomplete="email" placeholder="example@mail.com"
+                    aria-required="true" aria-describedby="emailError" />
+                <span id="emailError" class="error-message" aria-live="polite"></span>
+
+                <label for="product">Выберите продукт</label>
+                <select id="product" name="product" required aria-required="true" aria-describedby="productError">
+                    <option value="" disabled selected>-- Выберите --</option>
+                    <option value="eco-bag">Эко-сумка</option>
+                    <option value="bamboo-watch">Часы из бамбука</option>
+                    <option value="recycled-journal">Блокнот из переработанной бумаги</option>
+                </select>
+                <span id="productError" class="error-message" aria-live="polite"></span>
+
+                <button type="submit" disabled>Отправить заказ</button>
+            </form>
+
+            <!-- Отзывы -->
+            <form id="commentForm" class="fade-in" tabindex="0" aria-label="Форма отзыва">
+                <h2>Оставить отзыв</h2>
+
+                <label for="commentName">Имя</label>
+                <input type="text" id="commentName" name="commentName" required placeholder="Ваше имя"
+                    aria-required="true" aria-describedby="commentNameError" />
+                <span id="commentNameError" class="error-message" aria-live="polite"></span>
+
+                <label for="commentText">Комментарий</label>
+                <textarea id="commentText" name="commentText" required placeholder="Ваш отзыв" aria-required="true"
+                    aria-describedby="commentTextError"></textarea>
+                <span id="commentTextError" class="error-message" aria-live="polite"></span>
+
+                <button type="submit" disabled>Отправить отзыв</button>
+            </form>
+        </section>
+
+        <section id="comments" class="comments fade-in" tabindex="0" aria-label="Отзывы клиентов">
+            <h2>Отзывы наших клиентов</h2>
+            <ul class="comment-list" id="commentList" aria-live="polite" aria-relevant="additions">
+                <li><strong>Мария</strong>
+                    <p>Очень понравились эко-сумки, качество отличное и дизайн современный!</p>
+                </li>
+                <li><strong>Иван</strong>
+                    <p>Часы из бамбука — это просто находка для тех, кто заботится о природе и стиле.</p>
+                </li>
+            </ul>
+        </section>
+
+        <section id="subscribeForm" class="fade-in" tabindex="0" aria-label="Подписка на новости"
+            style="max-width: 600px; margin: 0 auto 6rem; background: rgba(255 255 255 / 0.85); padding: 2rem; border-radius: 20px; box-shadow: 0 8px 30px var(--shadow-light);">
+            <h2
+                style="font-family: 'Montserrat', sans-serif; font-weight:700; font-size:1.8rem; color:var(--color-text); text-align:center; margin-bottom:1.5rem;">
+                Подпишитесь на новости</h2>
+            <form id="subscribe" aria-label="Форма подписки"
+                style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; position: relative;">
+                <input type="email" id="subscribeEmail" name="subscribeEmail" required placeholder="Введите ваш email"
+                    aria-required="true" aria-describedby="subscribeEmailError"
+                    style="padding: 0.75rem 1rem; border-radius: 12px; border: 1.5px solid #a2b9a1; font-size: 1rem;" />
+                <span id="subscribeEmailError" class="error-message" aria-live="polite"
+                    style="position: absolute; bottom: 10px; left: 1rem;"></span>
+                <button type="submit" disabled
+                    style="background: var(--color-primary); color: var(--color-white); border: none; padding: 1rem 2rem; border-radius: 40px; font-weight: 700; cursor: pointer; box-shadow: 0 6px 15px var(--shadow-medium); transition: background-color 0.3s ease, box-shadow 0.3s ease;">Подписаться</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Scroll to top button -->
+    <button id="scrollTopBtn" aria-label="Наверх" title="Наверх" type="button" tabindex="0">&#8679;</button>
+
+
+
+    <footer role="contentinfo" aria-label="Контактная информация и социальные сети">
+        &copy; 2025 EcoStyle. Все права защищены.
+        <br />
+        <nav aria-label="Социальные сети" style="margin-top:0.5rem;">
+            <a href="https://www.facebook.com/ecostyle" target="_blank" rel="noopener noreferrer"
+                aria-label="Facebook EcoStyle" tabindex="0" class="social-link">
+                <svg width="24" height="24" fill="currentColor" aria-hidden="true" focusable="false"
+                    viewBox="0 0 24 24">
+                    <path
+                        d="M22.675 0h-21.35C.597 0 0 .597 0 1.333v21.334C0 23.403.597 24 1.325 24h11.495v-9.294H9.691v-3.622h3.129V8.413c0-3.1 1.894-4.788 4.659-4.788 1.325 0 2.466.099 2.797.143v3.24l-1.918.001c-1.505 0-1.797.715-1.797 1.763v2.313h3.59l-.467 3.622h-3.123V24h6.116c.728 0 1.325-.597 1.325-1.333V1.333C24 .597 23.403 0 22.675 0z" />
+                </svg>
+            </a>
+            <a href="https://www.instagram.com/ecostyle" target="_blank" rel="noopener noreferrer"
+                aria-label="Instagram EcoStyle" tabindex="0" class="social-link" style="margin-left:1rem;">
+                <svg width="24" height="24" fill="currentColor" aria-hidden="true" focusable="false"
+                    viewBox="0 0 24 24">
+                    <path
+                        d="M7.75 2h8.5C19.55 2 22 4.45 22 7.75v8.5c0 3.3-2.45 5.75-5.75 5.75h-8.5C4.45 22 2 19.55 2 16.25v-8.5C2 4.45 4.45 2 7.75 2zm0 2C5.68 4 4 5.68 4 7.75v8.5c0 2.07 1.68 3.75 3.75 3.75h8.5c2.07 0 3.75-1.68 3.75-3.75v-8.5c0-2.07-1.68-3.75-3.75-3.75h-8.5zm8.25 2a1 1 0 110 2 1 1 0 010-2zm-4.25 1.5a5.75 5.75 0 110 11.5 5.75 5.75 0 010-11.5zm0 2a3.75 3.75 0 100 7.5 3.75 3.75 0 000-7.5z" />
+                </svg>
+            </a>
+            <a href="https://twitter.com/ecostyle" target="_blank" rel="noopener noreferrer"
+                aria-label="Twitter EcoStyle" tabindex="0" class="social-link" style="margin-left:1rem;">
+                <svg width="24" height="24" fill="currentColor" aria-hidden="true" focusable="false"
+                    viewBox="0 0 24 24">
+                    <path
+                        d="M23.954 4.569a10 10 0 01-2.825.775 4.932 4.932 0 002.163-2.724 9.865 9.865 0 01-3.127 1.195 4.916 4.916 0 00-8.38 4.482A13.94 13.94 0 011.671 3.15a4.916 4.916 0 001.523 6.573 4.9 4.9 0 01-2.228-.616c-.054 2.281 1.581 4.415 3.949 4.89a4.935 4.935 0 01-2.224.084 4.918 4.918 0 004.588 3.417 9.867 9.867 0 01-6.102 2.104c-.396 0-.79-.023-1.17-.069a13.945 13.945 0 007.557 2.212c9.054 0 14.002-7.496 14.002-13.986 0-.21-.005-.423-.014-.633A9.936 9.936 0 0024 4.59z" />
+                </svg>
+            </a>
+        </nav>
+    </footer>
+
+
+    <script>
+        // Плавный скролл к форме заказа
+        document.getElementById('btnOrder').addEventListener('click', () => {
+            document.getElementById('orderForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            document.getElementById('name').focus();
+        });
+
+        // Валидация форм с отображением ошибок и управление disabled кнопками
+        function validateInput(input, regex = null) {
+            const value = input.value.trim();
+            if (!value) return 'Это поле обязательно для заполнения.';
+            if (regex && !regex.test(value)) return 'Некорректный формат.';
+            return '';
+        }
+
+        function validateSelect(select) {
+            if (!select.value) return 'Пожалуйста, выберите вариант.';
+            return '';
+        }
+
+        // Универсальная функция для установки ошибок
+        function setError(input, message) {
+            const errorElem = document.getElementById(input.id + 'Error');
+            if (errorElem) {
+                errorElem.textContent = message;
+            }
+        }
+
+        function clearError(input) {
+            setError(input, '');
+        }
+
+        // Проверка и обновление кнопки отправки для формы
+        function toggleSubmitButton(form) {
+            const btn = form.querySelector('button[type="submit"]');
+            let valid = true;
+
+            [...form.elements].forEach(el => {
+                if (el.tagName === 'BUTTON') return;
+                if (el.required) {
+                    let error = '';
+                    if (el.tagName === 'SELECT') {
+                        error = validateSelect(el);
+                    } else if (el.type === 'email') {
+                        error = validateInput(el, /^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+                    } else {
+                        error = validateInput(el);
+                    }
+                    if (error) valid = false;
+                }
+            });
+
+            btn.disabled = !valid;
+        }
+
+        // Валидация и обработка формы заказа
+        const orderForm = document.getElementById('orderForm');
+        ['input', 'change'].forEach(evt => {
+            orderForm.addEventListener(evt, e => {
+                if (!e.target.required) return;
+                let error = '';
+                if (e.target.tagName === 'SELECT') {
+                    error = validateSelect(e.target);
+                } else if (e.target.type === 'email') {
+                    error = validateInput(e.target, /^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+                } else {
+                    error = validateInput(e.target);
+                }
+                if (error) setError(e.target, error);
+                else clearError(e.target);
+                toggleSubmitButton(orderForm);
+            });
+        });
+
+        orderForm.addEventListener('submit', e => {
+            e.preventDefault();
+            alert(`Спасибо за заказ, ${e.target.name.value.trim()}! Мы свяжемся с вами по адресу ${e.target.email.value.trim()}.`);
+            e.target.reset();
+            toggleSubmitButton(orderForm);
+        });
+
+        // Валидация и обработка формы отзывов
+        const commentForm = document.getElementById('commentForm');
+        ['input', 'change'].forEach(evt => {
+            commentForm.addEventListener(evt, e => {
+                if (!e.target.required) return;
+                const error = validateInput(e.target);
+                if (error) setError(e.target, error);
+                else clearError(e.target);
+                toggleSubmitButton(commentForm);
+            });
+        });
+
+        commentForm.addEventListener('submit', e => {
+            e.preventDefault();
+            const name = e.target.commentName.value.trim();
+            const text = e.target.commentText.value.trim();
+
+            const li = document.createElement('li');
+            const strong = document.createElement('strong');
+            strong.textContent = name;
+            const p = document.createElement('p');
+            p.textContent = text;
+
+            li.appendChild(strong);
+            li.appendChild(p);
+            document.getElementById('commentList').appendChild(li);
+
+            alert('Спасибо за ваш отзыв!');
+            e.target.reset();
+            toggleSubmitButton(commentForm);
+        });
+
+        // Валидация и обработка формы подписки
+        const subscribeForm = document.getElementById('subscribe');
+        const subscribeEmailInput = document.getElementById('subscribeEmail');
+        subscribeEmailInput.addEventListener('input', () => {
+            const error = validateInput(subscribeEmailInput, /^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+            if (error) setError(subscribeEmailInput, error);
+            else clearError(subscribeEmailInput);
+            toggleSubmitButton(subscribeForm);
+        });
+
+        subscribeForm.addEventListener('submit', e => {
+            e.preventDefault();
+            alert(`Спасибо за подписку! Мы будем присылать новости на ${subscribeEmailInput.value.trim()}.`);
+            e.target.reset();
+            toggleSubmitButton(subscribeForm);
+        });
+
+        // Инициализация кнопок disabled при загрузке
+        document.addEventListener('DOMContentLoaded', () => {
+            toggleSubmitButton(orderForm);
+            toggleSubmitButton(commentForm);
+            toggleSubmitButton(subscribeForm);
+        });
+
+        // Анимация появления при скролле
+        const faders = document.querySelectorAll('.fade-in');
+
+        const appearOptions = {
+            threshold: 0.3,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const appearOnScroll = new IntersectionObserver(function (entries, appearOnScroll) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('visible');
+                appearOnScroll.unobserve(entry.target);
+            });
+        }, appearOptions);
+
+        faders.forEach(fader => {
+            appearOnScroll.observe(fader);
+        });
+
+        // Scroll to top button
+        const scrollBtn = document.getElementById('scrollTopBtn');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollBtn.classList.add('visible');
+            } else {
+                scrollBtn.classList.remove('visible');
+            }
+        });
+
+        scrollBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+
+
+        const navToggle = document.getElementById('navToggle');
+        const primaryNav = document.getElementById('primaryNav');
+        const header = document.getElementById('header');
+
+        navToggle.addEventListener('click', () => {
+            const expanded = navToggle.getAttribute('aria-expanded') === 'true' || false;
+            navToggle.setAttribute('aria-expanded', !expanded);
+            primaryNav.classList.toggle('open');
+        });
+
+        // Закрытие меню при клике на ссылку (для мобильных)
+        primaryNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (primaryNav.classList.contains('open')) {
+                    primaryNav.classList.remove('open');
+                    navToggle.setAttribute('aria-expanded', false);
+                    navToggle.focus();
+                }
+            });
+        });
+
+        // Изменение фона хедера при скролле
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+    </script>
+
+    <!-- Screen reader only helper -->
+    <style>
+        .sr-only {
+            position: absolute !important;
+            width: 1px !important;
+            height: 1px !important;
+            padding: 0 !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            clip: rect(0, 0, 0, 0) !important;
+            border: 0 !important;
+        }
+    </style>
+
+</body>
+
+</html>
