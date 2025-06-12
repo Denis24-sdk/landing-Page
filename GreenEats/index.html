@@ -2,22 +2,23 @@
 <html lang="ru">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>GreenEats - Здоровое питание с доставкой</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+
     <style>
         :root {
-            --primary: #4CAF50;
-            --primary-dark: #388E3C;
-            --secondary: #FF9800;
-            --light: #F9F9F9;
+            --primary: #4caf50;
+            --primary-dark: #388e3c;
+            --secondary: #ff9800;
+            --light: #f9f9f9;
             --dark: #333333;
             --gray: #777777;
-            --light-gray: #F0F0F0;
+            --light-gray: #f0f0f0;
             --transition: all 0.3s ease;
             --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             --radius: 12px;
@@ -81,7 +82,7 @@
         }
 
         .btn-secondary:hover {
-            background: #F57C00;
+            background: #f57c00;
         }
 
         /* Header */
@@ -165,9 +166,17 @@
             display: none;
             background: none;
             border: none;
-            font-size: 24px;
+            font-size: 28px;
             cursor: pointer;
             color: var(--dark);
+            transition: color 0.3s ease;
+            user-select: none;
+        }
+
+        .mobile-menu-btn:hover,
+        .mobile-menu-btn:focus {
+            color: var(--primary);
+            outline: none;
         }
 
         /* Hero Section */
@@ -395,183 +404,17 @@
         /* Contact Section */
         .contact {
             padding: 100px 0;
-            background: linear-gradient(rgba(76, 175, 80, 0.1), rgba(76, 175, 80, 0.1)),
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
                 url('https://images.unsplash.com/photo-1521017432531-fbd92d768814?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
             background-size: cover;
             background-position: center;
+            position: relative;
         }
 
         .contact-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 50px;
-        }
-
-        .contact-info {
-            color: white;
-        }
-
-        .contact-info h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: white;
-        }
-
-        .contact-info p {
-            margin-bottom: 30px;
-            font-size: 1.1rem;
-        }
-
-        .contact-details {
-            margin-top: 30px;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .contact-icon {
-            font-size: 24px;
-            margin-right: 15px;
-            color: var(--secondary);
-        }
-
-        .contact-form {
-            background: white;
-            padding: 40px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 14px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 16px;
-            transition: var(--transition);
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 60px 0 30px;
-        }
-
-        .footer-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-col h3 {
-            font-size: 1.4rem;
-            margin-bottom: 20px;
-            position: relative;
-            padding-bottom: 10px;
-        }
-
-        .footer-col h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 50px;
-            height: 2px;
-            background: var(--primary);
-        }
-
-        .footer-col p {
-            margin-bottom: 20px;
-            color: #bbb;
-        }
-
-        .footer-col ul {
-            list-style: none;
-        }
-
-        .footer-col ul li {
-            margin-bottom: 10px;
-        }
-
-        .footer-col ul li a {
-            color: #bbb;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .footer-col ul li a:hover {
-            color: var(--primary);
-            padding-left: 5px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            color: white;
-            transition: var(--transition);
-        }
-
-        .social-links a:hover {
-            background: var(--primary);
-            transform: translateY(-5px);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #bbb;
-            font-size: 0.9rem;
-        }
-
-
-        .contact {
-            padding: 100px 0;
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-                url('https://images.unsplash.com/photo-1521017432531-fbd92d768814?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
-            background-size: cover;
-            background-position: center;
-            position: relative;
         }
 
         .contact-info-blur {
@@ -623,6 +466,40 @@
             }
 
             nav ul {
+                display: none;
+                flex-direction: column;
+                background: rgba(255, 255, 255, 0.95);
+                position: fixed;
+                top: 70px;
+                right: 0;
+                width: 220px;
+                padding: 20px 10px;
+                border-radius: 8px 0 0 8px;
+                box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+                transition: transform 0.3s ease;
+                transform: translateX(100%);
+                z-index: 1050;
+                height: calc(100vh - 70px);
+                overflow-y: auto;
+            }
+
+            nav ul.open {
+                display: flex;
+                transform: translateX(0);
+            }
+
+            nav ul li {
+                margin: 15px 0;
+                margin-left: 0;
+            }
+
+            nav ul li a {
+                font-size: 1.1rem;
+                padding: 8px 10px;
+                display: block;
+            }
+
+            nav ul li a::after {
                 display: none;
             }
 
@@ -688,7 +565,7 @@
                 <h1>GreenEats</h1>
             </div>
             <nav>
-                <ul>
+                <ul id="nav-menu">
                     <li><a href="#home">Главная</a></li>
                     <li><a href="#features">Преимущества</a></li>
                     <li><a href="#products">Продукты</a></li>
@@ -696,7 +573,7 @@
                     <li><a href="#contact">Контакты</a></li>
                 </ul>
             </nav>
-            <button class="mobile-menu-btn">
+            <button class="mobile-menu-btn" aria-label="Открыть меню" aria-expanded="false" aria-controls="nav-menu">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
@@ -761,7 +638,7 @@
                 <div class="product-card">
                     <div class="product-image">
                         <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                            alt="Веганский набор">
+                            alt="Веганский набор" />
                     </div>
                     <div class="product-info">
                         <h3>Веганский набор</h3>
@@ -772,7 +649,7 @@
                 <div class="product-card">
                     <div class="product-image">
                         <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                            alt="Фитнес набор">
+                            alt="Фитнес набор" />
                     </div>
                     <div class="product-info">
                         <h3>Фитнес набор</h3>
@@ -783,7 +660,7 @@
                 <div class="product-card">
                     <div class="product-image">
                         <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                            alt="Средиземноморский набор">
+                            alt="Средиземноморский набор" />
                     </div>
                     <div class="product-info">
                         <h3>Средиземноморский набор</h3>
@@ -806,7 +683,7 @@
                 <div class="testimonial-card">
                     <div class="client-avatar">
                         <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80"
-                            alt="Анна Смирнова">
+                            alt="Анна Смирнова" />
                     </div>
                     <p class="testimonial-text">"Я заказала веганский набор и была приятно удивлена качеством продуктов!
                         Все свежее, вкусное и упаковано с заботой о природе. Теперь это мой основной источник здорового
@@ -818,11 +695,10 @@
         </div>
     </section>
 
-    <!-- Обновленная секция Contact -->
+    <!-- Contact Section -->
     <section class="contact" id="contact">
         <div class="container">
             <div class="contact-container">
-                <!-- Добавлен контейнер с размытым фоном -->
                 <div class="contact-info-blur">
                     <h2>Свяжитесь с нами</h2>
                     <p>Есть вопросы или хотите заказать пробный набор? Напишите нам, и мы с радостью поможем!</p>
@@ -846,11 +722,11 @@
                     <form id="contactForm">
                         <div class="form-group">
                             <label for="name">Ваше имя</label>
-                            <input type="text" id="name" required>
+                            <input type="text" id="name" required />
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" id="email" required>
+                            <input type="email" id="email" required />
                         </div>
                         <div class="form-group">
                             <label for="message">Сообщение</label>
@@ -902,7 +778,7 @@
                     <p>Будьте в курсе новостей и специальных предложений</p>
                     <form class="subscribe-form">
                         <div class="form-group">
-                            <input type="email" placeholder="Ваш Email" required>
+                            <input type="email" placeholder="Ваш Email" required />
                         </div>
                         <button type="submit" class="btn">Подписаться</button>
                     </form>
@@ -930,9 +806,19 @@
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+                // Закрыть меню на мобильных после клика
+                if (window.innerWidth <= 992) {
+                    navMenu.classList.remove('open');
+                    mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                    mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+                    mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+                }
             });
         });
 
@@ -941,12 +827,23 @@
             e.preventDefault();
 
             // Get form values
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
 
-            // In a real application, you would send this data to a server
-            // Here we'll just show an alert
+            if (!name || !email || !message) {
+                alert('Пожалуйста, заполните все поля формы.');
+                return;
+            }
+
+            // Валидация email простая
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Пожалуйста, введите корректный email.');
+                return;
+            }
+
+            // Здесь отправка данных на сервер (имитация)
             alert(`Спасибо, ${name}! Ваше сообщение отправлено. Мы свяжемся с вами по адресу ${email} в ближайшее время.`);
 
             // Reset form
@@ -955,12 +852,34 @@
 
         // Mobile menu toggle
         const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-        const navMenu = document.querySelector('nav ul');
+        const navMenu = document.getElementById('nav-menu');
 
-        mobileMenuBtn.addEventListener('click', function () {
-            navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
+        mobileMenuBtn.addEventListener('click', () => {
+            const isOpen = navMenu.classList.toggle('open');
+            mobileMenuBtn.setAttribute('aria-expanded', isOpen);
+            // Меняем иконку кнопки
+            const icon = mobileMenuBtn.querySelector('i');
+            if (isOpen) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Закрытие меню при изменении размера окна (если десктоп)
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 992) {
+                navMenu.classList.remove('open');
+                mobileMenuBtn.setAttribute('aria-expanded', false);
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
         });
     </script>
 </body>
 
 </html>
+
