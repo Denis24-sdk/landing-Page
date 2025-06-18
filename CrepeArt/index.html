@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Гофрированная бумага для творчества</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com/3.4.16">
+    </script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#7c3aed",
+                        secondary: "#e879f9",
+                    },
+                    borderRadius: {
+                        none: "0px",
+                        sm: "4px",
+                        DEFAULT: "8px",
+                        md: "12px",
+                        lg: "16px",
+                        xl: "20px",
+                        "2xl": "24px",
+                        "3xl": "32px",
+                        full: "9999px",
+                        button: "8px",
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        :where([class^="ri-"])::before {
+            content: "\f3c2";
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background-color: #7c3aed;
+            z-index: 9999;
+            width: 0%;
+            transition: width 0.2s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-checkbox {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #7c3aed;
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .custom-checkbox:checked {
+            background-color: #7c3aed;
+        }
+
+        .custom-checkbox:checked:after {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 2px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .custom-range {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .custom-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #7c3aed;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .custom-range::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #7c3aed;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+
+        .custom-switch {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 24px;
+        }
+
+        .custom-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .switch-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #e5e7eb;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .switch-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.switch-slider {
+            background-color: #7c3aed;
+        }
+
+        input:checked+.switch-slider:before {
+            transform: translateX(24px);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #7c3aed;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 999;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+        }
+
+        .quick-order {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background-color: #7c3aed;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999;
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+        }
+
+        .promo-popup {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            max-width: 300px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            z-index: 999;
+            transform: translateY(150%);
+            transition: transform 0.5s ease;
+        }
+
+        .promo-popup.visible {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body class="font-sans text-gray-800 bg-white">
+    <div class="scroll-indicator" id="scrollIndicator"></div>
+    <!-- Навигационное меню -->
+    <header class="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <a href="#" class="text-2xl font-['Pacifico'] text-primary">Crepe Art</a>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-gray-700 hover:text-primary transition-colors">Главная</a>
+                    <a href="#benefits" class="text-gray-700 hover:text-primary transition-colors">Преимущества</a>
+                    <a href="#catalog" class="text-gray-700 hover:text-primary transition-colors">Каталог</a>
+                    <a href="#usage" class="text-gray-700 hover:text-primary transition-colors">Применение</a>
+                    <a href="#reviews" class="text-gray-700 hover:text-primary transition-colors">Отзывы</a>
+                    <a href="#order" class="text-gray-700 hover:text-primary transition-colors">Заказать</a>
+                </nav>
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="hidden md:flex items-center text-gray-700 hover:text-primary">
+                        <div class="w-6 h-6 flex items-center justify-center">
+                            <i class="ri-phone-line"></i>
+                        </div>
+                        <span class="ml-2">+7 (999) 123-45-67</span>
+                    </a>
+                    <div class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-full cursor-pointer">
+                        <i class="ri-shopping-cart-2-line text-primary"></i>
+                    </div>
+                    <button class="md:hidden w-10 h-10 flex items-center justify-center" id="menuToggle">
+                        <i class="ri-menu-line text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Мобильное меню -->
+    <div class="fixed inset-0 bg-white z-40 transform translate-x-full transition-transform duration-300 md:hidden"
+        id="mobileMenu">
+        <div class="flex justify-end p-4">
+            <button class="w-10 h-10 flex items-center justify-center" id="menuClose">
+                <i class="ri-close-line text-xl"></i>
+            </button>
+        </div>
+        <nav class="flex flex-col space-y-6 p-8">
+            <a href="#home" class="text-xl text-gray-700 hover:text-primary transition-colors">Главная</a>
+            <a href="#benefits" class="text-xl text-gray-700 hover:text-primary transition-colors">Преимущества</a>
+            <a href="#catalog" class="text-xl text-gray-700 hover:text-primary transition-colors">Каталог</a>
+            <a href="#usage" class="text-xl text-gray-700 hover:text-primary transition-colors">Применение</a>
+            <a href="#reviews" class="text-xl text-gray-700 hover:text-primary transition-colors">Отзывы</a>
+            <a href="#order" class="text-xl text-gray-700 hover:text-primary transition-colors">Заказать</a>
+            <div class="pt-6 border-t border-gray-100">
+                <a href="#" class="flex items-center text-gray-700">
+                    <div class="w-6 h-6 flex items-center justify-center">
+                        <i class="ri-phone-line"></i>
+                    </div>
+                    <span class="ml-2">+7 (999) 123-45-67</span>
+                </a>
+            </div>
+        </nav>
+    </div>
+    <!-- Hero секция -->
+    <section id="home" class="relative min-h-screen pt-20 flex items-center"
+        style="background-image: url('https://readdy.ai/api/search-image?query=Beautiful%20colorful%20crepe%20paper%20in%20various%20vibrant%20colors%20arranged%20in%20a%20visually%20pleasing%20composition.%20The%20image%20shows%20different%20rolls%20and%20sheets%20of%20crepe%20paper%20with%20texture%20visible.%20The%20background%20is%20clean%20and%20minimal%20with%20soft%20lighting%20to%20highlight%20the%20paper%20texture%20and%20colors.%20The%20left%20side%20has%20more%20empty%20space%20for%20text%20overlay.%20Modern%2C%20professional%20product%20photography%20style.&width=1920&height=1080&seq=1&orientation=landscape'); background-size: cover; background-position: center;">
+        <div class="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-transparent"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="w-full md:w-1/2 lg:w-2/5">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">Гофрированная бумага для ваших
+                    творческих идей</h1>
+                <p class="text-lg md:text-xl text-gray-700 mb-8">Создавайте уникальные поделки, декорации и подарки с
+                    нашей высококачественной гофрированной бумагой. Более 50 оттенков для воплощения любых фантазий.</p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#catalog"
+                        class="bg-primary text-white py-3 px-8 rounded-button text-lg font-medium hover:bg-primary/90 transition-colors whitespace-nowrap">Выбрать
+                        цвет</a>
+                    <a href="#order"
+                        class="bg-white text-primary border-2 border-primary py-3 px-8 rounded-button text-lg font-medium hover:bg-primary/5 transition-colors whitespace-nowrap">Заказать
+                        сейчас</a>
+                </div>
+                <div class="flex items-center mt-12">
+                    <div class="flex -space-x-2">
+                        <img src="https://readdy.ai/api/search-image?query=professional%20portrait%20photo%20of%20young%20woman%20with%20light%20brown%20hair%2C%20neutral%20expression%2C%20simple%20background&width=60&height=60&seq=2&orientation=squarish"
+                            class="w-10 h-10 rounded-full border-2 border-white" alt="Клиент">
+                        <img src="https://readdy.ai/api/search-image?query=professional%20portrait%20photo%20of%20middle%20aged%20woman%20with%20dark%20hair%2C%20neutral%20expression%2C%20simple%20background&width=60&height=60&seq=3&orientation=squarish"
+                            class="w-10 h-10 rounded-full border-2 border-white" alt="Клиент">
+                        <img src="https://readdy.ai/api/search-image?query=professional%20portrait%20photo%20of%20young%20man%20with%20dark%20hair%2C%20neutral%20expression%2C%20simple%20background&width=60&height=60&seq=4&orientation=squarish"
+                            class="w-10 h-10 rounded-full border-2 border-white" alt="Клиент">
+                    </div>
+                    <div class="ml-4">
+                        <div class="flex items-center text-yellow-400 mb-1">
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                        </div>
+                        <p class="text-sm text-gray-600">Более 2000+ довольных клиентов</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <div class="w-10 h-10 flex items-center justify-center text-primary">
+                <i class="ri-arrow-down-line text-2xl"></i>
+            </div>
+        </div>
+    </section>
+    <!-- Преимущества -->
+    <section id="benefits" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Почему выбирают нашу гофрированную бумагу</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">Мы предлагаем только лучшие материалы для вашего
+                    творчества, чтобы каждая ваша работа была особенной</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-16 h-16 flex items-center justify-center bg-primary/10 rounded-full mb-6">
+                        <i class="ri-award-line text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Высокое качество</h3>
+                    <p class="text-gray-600">Плотная структура 180 г/м² обеспечивает долговечность и яркость цвета даже
+                        после длительного использования.</p>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-16 h-16 flex items-center justify-center bg-primary/10 rounded-full mb-6">
+                        <i class="ri-palette-line text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Широкая цветовая гамма</h3>
+                    <p class="text-gray-600">Более 50 оттенков в нашей коллекции позволят воплотить любые творческие
+                        идеи и найти нужный цвет.</p>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-16 h-16 flex items-center justify-center bg-primary/10 rounded-full mb-6">
+                        <i class="ri-truck-line text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Быстрая доставка</h3>
+                    <p class="text-gray-600">Отправляем заказы в день оформления. Доставка по Москве — 1-2 дня, по
+                        России — 3-7 дней.</p>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-16 h-16 flex items-center justify-center bg-primary/10 rounded-full mb-6">
+                        <i class="ri-price-tag-3-line text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Выгодные цены</h3>
+                    <p class="text-gray-600">Работаем напрямую с производителями, что позволяет предлагать лучшие цены
+                        без посредников.</p>
+                </div>
+            </div>
+            <div class="mt-16 bg-white p-8 rounded-lg shadow-sm">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="w-full md:w-1/2 mb-8 md:mb-0 md:pr-8">
+                        <img src="https://readdy.ai/api/search-image?query=A%20professional%20craftsperson%20working%20with%20colorful%20crepe%20paper%2C%20creating%20beautiful%20decorations.%20The%20person%20is%20shown%20from%20side%20angle%2C%20focused%20on%20their%20work.%20The%20workspace%20is%20clean%20and%20organized%20with%20various%20colors%20of%20crepe%20paper%20visible.%20Natural%20lighting%20highlights%20the%20vibrant%20colors%20and%20textures%20of%20the%20paper.%20Professional%20crafting%20scene%20with%20attention%20to%20detail.&width=600&height=400&seq=5&orientation=landscape"
+                            class="rounded-lg object-cover w-full h-auto" alt="Мастер за работой">
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <h3 class="text-2xl font-semibold mb-4">Экологически чистые материалы</h3>
+                        <p class="text-gray-600 mb-6">Наша гофрированная бумага производится из экологически чистого
+                            сырья, безопасного для детей и окружающей среды. Мы заботимся о природе и используем
+                            технологии, минимизирующие вред экологии.</p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <div class="w-5 h-5 flex items-center justify-center text-primary mt-1">
+                                    <i class="ri-check-line"></i>
+                                </div>
+                                <span class="ml-3 text-gray-700">Не содержит токсичных красителей</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="w-5 h-5 flex items-center justify-center text-primary mt-1">
+                                    <i class="ri-check-line"></i>
+                                </div>
+                                <span class="ml-3 text-gray-700">Сертифицирована для детского творчества</span>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="w-5 h-5 flex items-center justify-center text-primary mt-1">
+                                    <i class="ri-check-line"></i>
+                                </div>
+                                <span class="ml-3 text-gray-700">Подлежит вторичной переработке</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Каталог -->
+    <section id="catalog" class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Каталог гофрированной бумаги</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">Выберите идеальный цвет для вашего проекта из нашей
+                    обширной коллекции</p>
+            </div>
+            <div class="mb-10">
+                <div class="flex flex-wrap justify-center gap-3 mb-8">
+                    <button
+                        class="bg-primary text-white py-2 px-6 rounded-full text-sm font-medium hover:bg-primary/90 transition-colors whitespace-nowrap category-filter active"
+                        data-category="all">Все цвета</button>
+                    <button
+                        class="bg-white text-gray-700 border border-gray-200 py-2 px-6 rounded-full text-sm font-medium hover:bg-gray-50 transition-colors whitespace-nowrap category-filter"
+                        data-category="basic">Базовые</button>
+                    <button
+                        class="bg-white text-gray-700 border border-gray-200 py-2 px-6 rounded-full text-sm font-medium hover:bg-gray-50 transition-colors whitespace-nowrap category-filter"
+                        data-category="pastel">Пастельные</button>
+                    <button
+                        class="bg-white text-gray-700 border border-gray-200 py-2 px-6 rounded-full text-sm font-medium hover:bg-gray-50 transition-colors whitespace-nowrap category-filter"
+                        data-category="metallic">Металлик</button>
+                    <button
+                        class="bg-white text-gray-700 border border-gray-200 py-2 px-6 rounded-full text-sm font-medium hover:bg-gray-50 transition-colors whitespace-nowrap category-filter"
+                        data-category="gradient">Градиентные</button>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Продукт 1 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
+                    data-category="basic">
+                    <div class="relative">
+                        <img src="https://readdy.ai/api/search-image?query=A%20roll%20of%20bright%20red%20crepe%20paper%20partially%20unrolled%20to%20show%20texture.%20Clean%20product%20photography%20on%20white%20background%20with%20soft%20shadows.%20The%20paper%20shows%20its%20characteristic%20wrinkled%20texture.%20Professional%20product%20photography%20with%20good%20lighting%20to%20highlight%20the%20vibrant%20color%20and%20texture.&width=400&height=300&seq=6&orientation=landscape"
+                            class="w-full h-64 object-cover object-top" alt="Красная гофрированная бумага">
+                        <div class="absolute top-3 right-3 bg-primary text-white text-xs font-medium px-2 py-1 rounded">
+                            Хит продаж</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="text-lg font-semibold mb-2">Красная гофрированная бумага</h3>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-gray-500 text-sm">Артикул: CR-001</span>
+                                <div class="flex items-center mt-1">
+                                    <div class="flex items-center text-yellow-400 text-sm">
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-half-fill"></i>
+                                    </div>
+                                    <span class="text-xs text-gray-500 ml-1">(128)</span>
+                                </div>
+                            </div>
+                            <div class="text-lg font-bold text-primary">180 ₽</div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm text-gray-600">Размер: 50x250 см</div>
+                            <button
+                                class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-full hover:bg-primary/20 transition-colors">
+                                <i class="ri-shopping-cart-2-line text-primary"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Продукт 2 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
+                    data-category="basic">
+                    <div class="relative">
+                        <img src="https://readdy.ai/api/search-image?query=A%20roll%20of%20deep%20blue%20crepe%20paper%20partially%20unrolled%20to%20show%20texture.%20Clean%20product%20photography%20on%20white%20background%20with%20soft%20shadows.%20The%20paper%20shows%20its%20characteristic%20wrinkled%20texture.%20Professional%20product%20photography%20with%20good%20lighting%20to%20highlight%20the%20vibrant%20color%20and%20texture.&width=400&height=300&seq=7&orientation=landscape"
+                            class="w-full h-64 object-cover object-top" alt="Синяя гофрированная бумага">
+                    </div>
+                    <div class="p-5">
+                        <h3 class="text-lg font-semibold mb-2">Синяя гофрированная бумага</h3>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-gray-500 text-sm">Артикул: CR-002</span>
+                                <div class="flex items-center mt-1">
+                                    <div class="flex items-center text-yellow-400 text-sm">
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-line"></i>
+                                    </div>
+                                    <span class="text-xs text-gray-500 ml-1">(96)</span>
+                                </div>
+                            </div>
+                            <div class="text-lg font-bold text-primary">180 ₽</div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm text-gray-600">Размер: 50x250 см</div>
+                            <button
+                                class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-full hover:bg-primary/20 transition-colors">
+                                <i class="ri-shopping-cart-2-line text-primary"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Продукт 3 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
+                    data-category="pastel">
+                    <div class="relative">
+                        <img src="https://readdy.ai/api/search-image?query=A%20roll%20of%20soft%20pink%20pastel%20crepe%20paper%20partially%20unrolled%20to%20show%20texture.%20Clean%20product%20photography%20on%20white%20background%20with%20soft%20shadows.%20The%20paper%20shows%20its%20characteristic%20wrinkled%20texture.%20Professional%20product%20photography%20with%20good%20lighting%20to%20highlight%20the%20delicate%20color%20and%20texture.&width=400&height=300&seq=8&orientation=landscape"
+                            class="w-full h-64 object-cover object-top" alt="Розовая пастельная гофрированная бумага">
+                    </div>
+                    <div class="p-5">
+                        <h3 class="text-lg font-semibold mb-2">Розовая пастельная бумага</h3>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-gray-500 text-sm">Артикул: CR-023</span>
+                                <div class="flex items-center mt-1">
+                                    <div class="flex items-center text-yellow-400 text-sm">
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                    </div>
+                                    <span class="text-xs text-gray-500 ml-1">(152)</span>
+                                </div>
+                            </div>
+                            <div class="text-lg font-bold text-primary">195 ₽</div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm text-gray-600">Размер: 50x250 см</div>
+                            <button
+                                class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-full hover:bg-primary/20 transition-colors">
+                                <i class="ri-shopping-cart-2-line text-primary"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Продукт 4 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
+                    data-category="metallic">
+                    <div class="relative">
+                        <img src="https://readdy.ai/api/search-image?query=A%20roll%20of%20gold%20metallic%20crepe%20paper%20partially%20unrolled%20to%20show%20texture%20and%20shine.%20Clean%20product%20photography%20on%20white%20background%20with%20soft%20shadows.%20The%20paper%20shows%20its%20characteristic%20wrinkled%20texture%20with%20metallic%20sheen.%20Professional%20product%20photography%20with%20good%20lighting%20to%20highlight%20the%20metallic%20finish%20and%20texture.&width=400&height=300&seq=9&orientation=landscape"
+                            class="w-full h-64 object-cover object-top" alt="Золотая металлик гофрированная бумага">
+                        <div
+                            class="absolute top-3 right-3 bg-secondary text-white text-xs font-medium px-2 py-1 rounded">
+                            Новинка</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="text-lg font-semibold mb-2">Золотая металлик бумага</h3>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-gray-500 text-sm">Артикул: CR-045</span>
+                                <div class="flex items-center mt-1">
+                                    <div class="flex items-center text-yellow-400 text-sm">
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-half-fill"></i>
+                                    </div>
+                                    <span class="text-xs text-gray-500 ml-1">(78)</span>
+                                </div>
+                            </div>
+                            <div class="text-lg font-bold text-primary">240 ₽</div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm text-gray-600">Размер: 50x250 см</div>
+                            <button
+                                class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-full hover:bg-primary/20 transition-colors">
+                                <i class="ri-shopping-cart-2-line text-primary"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Продукт 5 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
+                    data-category="gradient">
+                    <div class="relative">
+                        <img src="https://readdy.ai/api/search-image?query=A%20roll%20of%20gradient%20crepe%20paper%20transitioning%20from%20blue%20to%20purple%2C%20partially%20unrolled%20to%20show%20texture%20and%20color%20transition.%20Clean%20product%20photography%20on%20white%20background%20with%20soft%20shadows.%20The%20paper%20shows%20its%20characteristic%20wrinkled%20texture%20with%20smooth%20color%20gradient.%20Professional%20product%20photography%20with%20good%20lighting%20to%20highlight%20the%20color%20transition%20and%20texture.&width=400&height=300&seq=10&orientation=landscape"
+                            class="w-full h-64 object-cover object-top" alt="Градиентная гофрированная бумага">
+                        <div
+                            class="absolute top-3 right-3 bg-secondary text-white text-xs font-medium px-2 py-1 rounded">
+                            Новинка</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="text-lg font-semibold mb-2">Градиент сине-фиолетовый</h3>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-gray-500 text-sm">Артикул: CR-067</span>
+                                <div class="flex items-center mt-1">
+                                    <div class="flex items-center text-yellow-400 text-sm">
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-line"></i>
+                                    </div>
+                                    <span class="text-xs text-gray-500 ml-1">(42)</span>
+                                </div>
+                            </div>
+                            <div class="text-lg font-bold text-primary">260 ₽</div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm text-gray-600">Размер: 50x250 см</div>
+                            <button
+                                class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-full hover:bg-primary/20 transition-colors">
+                                <i class="ri-shopping-cart-2-line text-primary"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Продукт 6 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
+                    data-category="basic">
+                    <div class="relative">
+                        <img src="https://readdy.ai/api/search-image?query=A%20roll%20of%20bright%20green%20crepe%20paper%20partially%20unrolled%20to%20show%20texture.%20Clean%20product%20photography%20on%20white%20background%20with%20soft%20shadows.%20The%20paper%20shows%20its%20characteristic%20wrinkled%20texture.%20Professional%20product%20photography%20with%20good%20lighting%20to%20highlight%20the%20vibrant%20color%20and%20texture.&width=400&height=300&seq=11&orientation=landscape"
+                            class="w-full h-64 object-cover object-top" alt="Зеленая гофрированная бумага">
+                    </div>
+                    <div class="p-5">
+                        <h3 class="text-lg font-semibold mb-2">Зеленая гофрированная бумага</h3>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-gray-500 text-sm">Артикул: CR-003</span>
+                                <div class="flex items-center mt-1">
+                                    <div class="flex items-center text-yellow-400 text-sm">
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-line"></i>
+                                    </div>
+                                    <span class="text-xs text-gray-500 ml-1">(89)</span>
+                                </div>
+                            </div>
+                            <div class="text-lg font-bold text-primary">180 ₽</div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm text-gray-600">Размер: 50x250 см</div>
+                            <button
+                                class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-full hover:bg-primary/20 transition-colors">
+                                <i class="ri-shopping-cart-2-line text-primary"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Продукт 7 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
+                    data-category="pastel">
+                    <div class="relative">
+                        <img src="https://readdy.ai/api/search-image?query=A%20roll%20of%20soft%20mint%20green%20pastel%20crepe%20paper%20partially%20unrolled%20to%20show%20texture.%20Clean%20product%20photography%20on%20white%20background%20with%20soft%20shadows.%20The%20paper%20shows%20its%20characteristic%20wrinkled%20texture.%20Professional%20product%20photography%20with%20good%20lighting%20to%20highlight%20the%20delicate%20color%20and%20texture.&width=400&height=300&seq=12&orientation=landscape"
+                            class="w-full h-64 object-cover object-top" alt="Мятная пастельная гофрированная бумага">
+                    </div>
+                    <div class="p-5">
+                        <h3 class="text-lg font-semibold mb-2">Мятная пастельная бумага</h3>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-gray-500 text-sm">Артикул: CR-025</span>
+                                <div class="flex items-center mt-1">
+                                    <div class="flex items-center text-yellow-400 text-sm">
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-line"></i>
+                                    </div>
+                                    <span class="text-xs text-gray-500 ml-1">(67)</span>
+                                </div>
+                            </div>
+                            <div class="text-lg font-bold text-primary">195 ₽</div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm text-gray-600">Размер: 50x250 см</div>
+                            <button
+                                class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-full hover:bg-primary/20 transition-colors">
+                                <i class="ri-shopping-cart-2-line text-primary"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Продукт 8 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
+                    data-category="metallic">
+                    <div class="relative">
+                        <img src="https://readdy.ai/api/search-image?query=A%20roll%20of%20silver%20metallic%20crepe%20paper%20partially%20unrolled%20to%20show%20texture%20and%20shine.%20Clean%20product%20photography%20on%20white%20background%20with%20soft%20shadows.%20The%20paper%20shows%20its%20characteristic%20wrinkled%20texture%20with%20metallic%20sheen.%20Professional%20product%20photography%20with%20good%20lighting%20to%20highlight%20the%20metallic%20finish%20and%20texture.&width=400&height=300&seq=13&orientation=landscape"
+                            class="w-full h-64 object-cover object-top" alt="Серебряная металлик гофрированная бумага">
+                    </div>
+                    <div class="p-5">
+                        <h3 class="text-lg font-semibold mb-2">Серебряная металлик бумага</h3>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <span class="text-gray-500 text-sm">Артикул: CR-046</span>
+                                <div class="flex items-center mt-1">
+                                    <div class="flex items-center text-yellow-400 text-sm">
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-fill"></i>
+                                        <i class="ri-star-half-fill"></i>
+                                    </div>
+                                    <span class="text-xs text-gray-500 ml-1">(83)</span>
+                                </div>
+                            </div>
+                            <div class="text-lg font-bold text-primary">240 ₽</div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="text-sm text-gray-600">Размер: 50x250 см</div>
+                            <button
+                                class="w-10 h-10 flex items-center justify-center bg-primary/10 rounded-full hover:bg-primary/20 transition-colors">
+                                <i class="ri-shopping-cart-2-line text-primary"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-12">
+                <a href="#"
+                    class="inline-flex items-center bg-white text-primary border-2 border-primary py-3 px-8 rounded-button text-lg font-medium hover:bg-primary/5 transition-colors whitespace-nowrap">
+                    <span>Смотреть все цвета</span>
+                    <i class="ri-arrow-right-line ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- Применение продукта -->
+    <section id="usage" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Идеи применения гофрированной бумаги</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">Откройте для себя безграничные возможности для
+                    творчества с нашей гофрированной бумагой</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm">
+                    <img src="https://readdy.ai/api/search-image?query=Beautiful%20paper%20flowers%20made%20from%20colorful%20crepe%20paper%20arranged%20in%20a%20bouquet.%20The%20flowers%20show%20detailed%20craftsmanship%20with%20realistic%20petals%20and%20stems.%20The%20background%20is%20neutral%20to%20highlight%20the%20vibrant%20colors%20of%20the%20paper%20flowers.%20Professional%20photography%20with%20good%20lighting%20to%20showcase%20the%20texture%20and%20colors%20of%20the%20crepe%20paper%20flowers.&width=600&height=400&seq=14&orientation=landscape"
+                        class="w-full h-64 object-cover object-top" alt="Цветы из гофрированной бумаги">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-3">Цветы и букеты</h3>
+                        <p class="text-gray-600 mb-4">Создавайте реалистичные цветы, которые никогда не завянут.
+                            Идеально для подарков, декора интерьера и свадебных букетов.</p>
+                        <a href="#" class="inline-flex items-center text-primary hover:text-primary/80 font-medium">
+                            <span>Смотреть мастер-класс</span>
+                            <i class="ri-arrow-right-line ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm">
+                    <img src="https://readdy.ai/api/search-image?query=Festive%20party%20decorations%20made%20from%20colorful%20crepe%20paper%20including%20pom-poms%2C%20streamers%2C%20and%20garlands.%20The%20decorations%20are%20arranged%20to%20show%20variety%20and%20creativity.%20The%20background%20is%20neutral%20to%20highlight%20the%20vibrant%20colors.%20Professional%20photography%20with%20good%20lighting%20to%20showcase%20the%20texture%20and%20colors%20of%20the%20crepe%20paper%20decorations.&width=600&height=400&seq=15&orientation=landscape"
+                        class="w-full h-64 object-cover object-top" alt="Праздничный декор из гофрированной бумаги">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-3">Праздничный декор</h3>
+                        <p class="text-gray-600 mb-4">Гирлянды, помпоны, фоны для фотозон и другие элементы декора для
+                            дней рождения, свадеб и тематических вечеринок.</p>
+                        <a href="#" class="inline-flex items-center text-primary hover:text-primary/80 font-medium">
+                            <span>Смотреть идеи декора</span>
+                            <i class="ri-arrow-right-line ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm">
+                    <img src="https://readdy.ai/api/search-image?query=Creative%20gift%20wrapping%20using%20colorful%20crepe%20paper%20with%20bows%20and%20decorative%20elements.%20The%20gifts%20are%20wrapped%20in%20various%20styles%20showing%20the%20versatility%20of%20crepe%20paper.%20The%20background%20is%20neutral%20to%20highlight%20the%20vibrant%20colors.%20Professional%20photography%20with%20good%20lighting%20to%20showcase%20the%20texture%20and%20colors%20of%20the%20crepe%20paper%20gift%20wrapping.&width=600&height=400&seq=16&orientation=landscape"
+                        class="w-full h-64 object-cover object-top" alt="Упаковка подарков из гофрированной бумаги">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-3">Упаковка подарков</h3>
+                        <p class="text-gray-600 mb-4">Оригинальная упаковка подарков, декоративные банты и цветы для
+                            оформления презентов на любой праздник.</p>
+                        <a href="#" class="inline-flex items-center text-primary hover:text-primary/80 font-medium">
+                            <span>Смотреть варианты упаковки</span>
+                            <i class="ri-arrow-right-line ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm">
+                    <img src="https://readdy.ai/api/search-image?query=Childrens%20craft%20project%20using%20colorful%20crepe%20paper.%20The%20image%20shows%20kids%20hands%20working%20with%20crepe%20paper%20to%20create%20simple%20crafts%20like%20animals%20or%20masks.%20The%20crafts%20are%20colorful%20and%20fun.%20The%20background%20is%20clean%20to%20focus%20on%20the%20crafting%20activity.%20Professional%20photography%20with%20good%20lighting%20to%20showcase%20the%20creative%20process%20and%20finished%20crafts.&width=600&height=400&seq=17&orientation=landscape"
+                        class="w-full h-64 object-cover object-top" alt="Детское творчество с гофрированной бумагой">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-3">Детское творчество</h3>
+                        <p class="text-gray-600 mb-4">Простые и увлекательные поделки для детей: маски, аппликации,
+                            объемные фигурки животных и сказочных персонажей.</p>
+                        <a href="#" class="inline-flex items-center text-primary hover:text-primary/80 font-medium">
+                            <span>Смотреть идеи для детей</span>
+                            <i class="ri-arrow-right-line ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm">
+                    <img src="https://readdy.ai/api/search-image?query=Theatrical%20or%20carnival%20costumes%20and%20accessories%20made%20from%20colorful%20crepe%20paper.%20The%20image%20shows%20elaborate%20costume%20elements%20like%20masks%2C%20headdresses%2C%20or%20costume%20parts.%20The%20creations%20are%20vibrant%20and%20artistic.%20Professional%20photography%20with%20good%20lighting%20to%20showcase%20the%20creativity%20and%20craftsmanship%20of%20the%20crepe%20paper%20costume%20elements.&width=600&height=400&seq=18&orientation=landscape"
+                        class="w-full h-64 object-cover object-top" alt="Карнавальные костюмы из гофрированной бумаги">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-3">Карнавальные костюмы</h3>
+                        <p class="text-gray-600 mb-4">Яркие элементы для карнавальных костюмов: юбки, воротники,
+                            головные уборы и аксессуары для тематических вечеринок.</p>
+                        <a href="#" class="inline-flex items-center text-primary hover:text-primary/80 font-medium">
+                            <span>Смотреть идеи костюмов</span>
+                            <i class="ri-arrow-right-line ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm">
+                    <img src="https://readdy.ai/api/search-image?query=Home%20decor%20items%20made%20from%20colorful%20crepe%20paper%20such%20as%20wall%20hangings%2C%20lampshades%2C%20or%20table%20centerpieces.%20The%20decor%20items%20are%20elegant%20and%20stylish%2C%20showing%20sophisticated%20use%20of%20crepe%20paper.%20The%20background%20is%20neutral%20to%20highlight%20the%20crepe%20paper%20creations.%20Professional%20photography%20with%20good%20lighting%20to%20showcase%20the%20texture%20and%20colors%20of%20the%20crepe%20paper%20home%20decor%20items.&width=600&height=400&seq=19&orientation=landscape"
+                        class="w-full h-64 object-cover object-top" alt="Декор интерьера из гофрированной бумаги">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-3">Декор интерьера</h3>
+                        <p class="text-gray-600 mb-4">Стильные элементы декора для дома: настенные панно, абажуры для
+                            ламп, декоративные подушки и другие предметы интерьера.</p>
+                        <a href="#" class="inline-flex items-center text-primary hover:text-primary/80 font-medium">
+                            <span>Смотреть идеи для дома</span>
+                            <i class="ri-arrow-right-line ml-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-16 bg-white p-8 rounded-lg shadow-sm">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="w-full md:w-1/2 mb-8 md:mb-0 md:pr-8">
+                        <img src="https://readdy.ai/api/search-image?query=A%20professional%20crafting%20workshop%20with%20people%20learning%20to%20make%20crepe%20paper%20flowers.%20The%20image%20shows%20a%20diverse%20group%20of%20adults%20at%20tables%20with%20crepe%20paper%20supplies%2C%20following%20an%20instructor.%20The%20atmosphere%20is%20creative%20and%20collaborative.%20Professional%20photography%20with%20good%20lighting%20to%20showcase%20the%20learning%20environment%20and%20creative%20process.&width=600&height=400&seq=20&orientation=landscape"
+                            class="rounded-lg object-cover w-full h-auto"
+                            alt="Мастер-класс по работе с гофрированной бумагой">
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <h3 class="text-2xl font-semibold mb-4">Мастер-классы по работе с гофрированной бумагой</h3>
+                        <p class="text-gray-600 mb-6">Присоединяйтесь к нашим регулярным мастер-классам, где опытные
+                            флористы и декораторы научат вас создавать красивые изделия из гофрированной бумаги.
+                            Подходит для начинающих и продвинутых мастеров.</p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="#"
+                                class="bg-primary text-white py-3 px-6 rounded-button text-base font-medium hover:bg-primary/90 transition-colors whitespace-nowrap">Расписание
+                                мастер-классов</a>
+                            <a href="#"
+                                class="bg-white text-primary border-2 border-primary py-3 px-6 rounded-button text-base font-medium hover:bg-primary/5 transition-colors whitespace-nowrap">Онлайн-курсы</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Отзывы клиентов -->
+    <section id="reviews" class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Что говорят наши клиенты</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">Более 10 000 довольных клиентов уже выбрали нашу
+                    гофрированную бумагу для своих проектов</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-lg shadow-sm">
+                    <div class="bg-white p-8 rounded-lg shadow-sm h-full">
+                        <div class="flex items-center text-yellow-400 mb-4">
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                        </div>
+                        <p class="text-gray-600 mb-6">"Потрясающее качество бумаги! Использовала для создания цветов на
+                            свадьбу дочери, гости были в восторге и не верили, что цветы сделаны из бумаги. Цвета яркие,
+                            насыщенные, бумага очень пластичная и приятная в работе."</p>
+                        <div class="flex items-center">
+                            <img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20portrait%20of%20a%20middle-aged%20woman%20with%20blonde%20hair%2C%20friendly%20smile%2C%20neutral%20background%2C%20natural%20lighting&width=60&height=60&seq=21&orientation=squarish"
+                                class="w-12 h-12 rounded-full object-cover" alt="Елена Смирнова">
+                            <div class="ml-4">
+                                <h4 class="font-semibold">Елена Смирнова</h4>
+                                <p class="text-sm text-gray-500">Флорист, Москва</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-slide min-w-full md:min-w-[33.333%] px-4">
+                    <div class="bg-white p-8 rounded-lg shadow-sm h-full">
+                        <div class="flex items-center text-yellow-400 mb-4">
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                        </div>
+                        <p class="text-gray-600 mb-6">"Регулярно заказываю гофрированную бумагу для своего магазина
+                            подарков. Клиенты всегда довольны качеством изделий. Бумага не выцветает со временем, держит
+                            форму и очень приятна на ощупь. Отдельное спасибо за оперативную доставку!"</p>
+                        <div class="flex items-center">
+                            <img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20portrait%20of%20a%20young%20man%20with%20dark%20hair%20and%20beard%2C%20friendly%20smile%2C%20neutral%20background%2C%20natural%20lighting&width=60&height=60&seq=22&orientation=squarish"
+                                class="w-12 h-12 rounded-full object-cover" alt="Алексей Петров">
+                            <div class="ml-4">
+                                <h4 class="font-semibold">Алексей Петров</h4>
+                                <p class="text-sm text-gray-500">Владелец магазина подарков, Санкт-Петербург</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-slide min-w-full md:min-w-[33.333%] px-4">
+                    <div class="bg-white p-8 rounded-lg shadow-sm h-full">
+                        <div class="flex items-center text-yellow-400 mb-4">
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-half-fill"></i>
+                        </div>
+                        <p class="text-gray-600 mb-6">"Я учитель начальных классов, и мы с детьми часто делаем поделки
+                            из гофрированной бумаги. Качество превосходное, цвета яркие, что очень нравится детям.
+                            Бумага легко режется и не рвется при работе с ней, что важно для детского творчества."</p>
+                        <div class="flex items-center">
+                            <img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20portrait%20of%20a%20middle-aged%20woman%20with%20dark%20hair%2C%20friendly%20smile%2C%20neutral%20background%2C%20natural%20lighting&width=60&height=60&seq=23&orientation=squarish"
+                                class="w-12 h-12 rounded-full object-cover" alt="Ирина Николаева">
+                            <div class="ml-4">
+                                <h4 class="font-semibold">Ирина Николаева</h4>
+                                <p class="text-sm text-gray-500">Учитель, Екатеринбург</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="review-slide min-w-full md:min-w-[33.333%] px-4">
+                    <div class="bg-white p-8 rounded-lg shadow-sm h-full">
+                        <div class="flex items-center text-yellow-400 mb-4">
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-fill"></i>
+                            <i class="ri-star-line"></i>
+                        </div>
+                        <p class="text-gray-600 mb-6">"Заказываю бумагу для декора мероприятий. Широкий выбор цветов
+                            позволяет подобрать идеальную палитру для любой тематики. Металлик особенно хорош для
+                            новогодних и корпоративных мероприятий. Единственный минус — иногда бывают задержки с
+                            доставкой."</p>
+                        <div class="flex items-center">
+                            <img src="https://readdy.ai/api/search-image?query=Professional%20headshot%20portrait%20of%20a%20young%20woman%20with%20red%20hair%2C%20friendly%20smile%2C%20neutral%20background%2C%20natural%20lighting&width=60&height=60&seq=24&orientation=squarish"
+                                class="w-12 h-12 rounded-full object-cover" alt="Мария Соколова">
+                            <div class="ml-4">
+                                <h4 class="font-semibold">Мария Соколова</h4>
+                                <p class="text-sm text-gray-500">Организатор мероприятий, Казань</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+    <!-- Форма заказа -->
+    <section id="order" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-5xl mx-auto bg-white rounded-lg shadow-sm overflow-hidden">
+                <div class="flex flex-col md:flex-row">
+                    <div class="w-full md:w-1/2 bg-primary p-10 text-white">
+                        <h2 class="text-3xl font-bold mb-6">Оформите заказ</h2>
+                        <p class="mb-8">Заполните форму, и мы свяжемся с вами для подтверждения заказа. Доставка по всей
+                            России.</p>
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div
+                                    class="w-10 h-10 flex items-center justify-center bg-white/20 rounded-full mr-4 shrink-0">
+                                    <i class="ri-truck-line text-white"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold mb-1">Быстрая доставка</h3>
+                                    <p class="text-white/80 text-sm">Доставка по Москве — 1-2 дня, по России — 3-7 дней
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div
+                                    class="w-10 h-10 flex items-center justify-center bg-white/20 rounded-full mr-4 shrink-0">
+                                    <i class="ri-secure-payment-line text-white"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold mb-1">Безопасная оплата</h3>
+                                    <p class="text-white/80 text-sm">Оплата при получении или онлайн через защищенные
+                                        системы</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div
+                                    class="w-10 h-10 flex items-center justify-center bg-white/20 rounded-full mr-4 shrink-0">
+                                    <i class="ri-customer-service-2-line text-white"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold mb-1">Поддержка клиентов</h3>
+                                    <p class="text-white/80 text-sm">Наши менеджеры на связи с 9:00 до 21:00 без
+                                        выходных</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-12">
+                            <p class="font-semibold mb-3">Способы оплаты:</p>
+                            <div class="flex space-x-4">
+                                <div class="w-10 h-10 flex items-center justify-center bg-white rounded">
+                                    <i class="ri-visa-fill text-blue-800"></i>
+                                </div>
+                                <div class="w-10 h-10 flex items-center justify-center bg-white rounded">
+                                    <i class="ri-mastercard-fill text-orange-600"></i>
+                                </div>
+                                <div class="w-10 h-10 flex items-center justify-center bg-white rounded">
+                                    <i class="ri-bank-card-fill text-gray-700"></i>
+                                </div>
+                                <div class="w-10 h-10 flex items-center justify-center bg-white rounded">
+                                    <i class="ri-alipay-fill text-blue-600"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2 p-10">
+                        <form id="orderForm">
+                            <div class="mb-6">
+                                <label for="name" class="block text-gray-700 font-medium mb-2">Ваше имя</label>
+                                <input type="text" id="name"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
+                                    placeholder="Введите ваше имя">
+                            </div>
+                            <div class="mb-6">
+                                <label for="phone" class="block text-gray-700 font-medium mb-2">Телефон</label>
+                                <input type="tel" id="phone"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
+                                    placeholder="+7 (___) ___-__-__">
+                            </div>
+                            <div class="mb-6">
+                                <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
+                                <input type="email" id="email"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
+                                    placeholder="example@mail.ru">
+                            </div>
+                            <div class="mb-6">
+                                <label for="color" class="block text-gray-700 font-medium mb-2">Выберите цвет</label>
+                                <div class="relative">
+                                    <select id="color"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded appearance-none focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary pr-8">
+                                        <option value="">Выберите цвет</option>
+                                        <option value="red">Красный</option>
+                                        <option value="blue">Синий</option>
+                                        <option value="green">Зеленый</option>
+                                        <option value="pink">Розовый пастельный</option>
+                                        <option value="mint">Мятный пастельный</option>
+                                        <option value="gold">Золотой металлик</option>
+                                        <option value="silver">Серебряный металлик</option>
+                                        <option value="gradient">Градиент сине-фиолетовый</option>
+                                    </select>
+                                    <div
+                                        class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                                        <i class="ri-arrow-down-s-line text-gray-500"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-6">
+                                <label for="quantity" class="block text-gray-700 font-medium mb-2">Количество
+                                    (шт.)</label>
+                                <input type="number" id="quantity" min="1" value="1"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+                            </div>
+                            <div class="mb-6">
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="custom-checkbox">
+                                    <span class="ml-3 text-gray-700 text-sm">Я согласен с <a href="#"
+                                            class="text-primary hover:underline">условиями обработки персональных
+                                            данных</a></span>
+                                </label>
+                            </div>
+                            <button type="submit"
+                                class="w-full bg-primary text-white py-3 px-6 rounded-button text-lg font-medium hover:bg-primary/90 transition-colors whitespace-nowrap">Оформить
+                                заказ</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Контакты и футер -->
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <a href="#" class="text-2xl font-['Pacifico'] text-white mb-6 inline-block">Crepe Art</a>
+                    <p class="text-gray-400 mb-6">Качественная гофрированная бумага для творчества и декора. Более 10
+                        лет на рынке товаров для рукоделия.</p>
+                    <div class="flex space-x-4">
+                        <a href="#"
+                            class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+                            <i class="ri-instagram-line"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+                            <i class="ri-vk-fill"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+                            <i class="ri-telegram-fill"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors">
+                            <i class="ri-youtube-fill"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Информация</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">О компании</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Доставка и оплата</a>
+                        </li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Возврат и обмен</a>
+                        </li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Политика
+                                конфиденциальности</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Блог о творчестве</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Каталог</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Базовые цвета</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Пастельные оттенки</a>
+                        </li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Металлик</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Градиентные</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Наборы бумаги</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Контакты</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <div class="w-5 h-5 flex items-center justify-center text-primary mt-1">
+                                <i class="ri-map-pin-line"></i>
+                            </div>
+                            <span class="ml-3 text-gray-400">г. Москва, ул. Творческая, д. 42</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-5 h-5 flex items-center justify-center text-primary mt-1">
+                                <i class="ri-phone-line"></i>
+                            </div>
+                            <span class="ml-3 text-gray-400">+7 (999) 123-45-67</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-5 h-5 flex items-center justify-center text-primary mt-1">
+                                <i class="ri-mail-line"></i>
+                            </div>
+                            <span class="ml-3 text-gray-400">info@gofrobumaga.ru</span>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-5 h-5 flex items-center justify-center text-primary mt-1">
+                                <i class="ri-time-line"></i>
+                            </div>
+                            <span class="ml-3 text-gray-400">Пн-Пт: 9:00-20:00<br>Сб-Вс: 10:00-18:00</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2025 Гофрированная бумага. Все права защищены.</p>
+                    <div class="flex items-center space-x-4">
+                        <span class="text-gray-500 text-sm">Способы оплаты:</span>
+                        <div class="flex space-x-2">
+                            <i class="ri-visa-line text-gray-400"></i>
+                            <i class="ri-mastercard-line text-gray-400"></i>
+                            <i class="ri-paypal-line text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Форма подписки на новости -->
+    <div class="fixed bottom-0 left-0 right-0 bg-primary z-30 transform translate-y-full transition-transform duration-500"
+        id="subscribeBar">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-white font-semibold text-lg">Подпишитесь на новости и акции</h3>
+                    <p class="text-white/80 text-sm">Получите скидку 10% на первый заказ</p>
+                </div>
+                <div class="flex w-full md:w-auto">
+                    <input type="email" placeholder="Ваш email"
+                        class="px-4 py-2 rounded-l-button border-none focus:outline-none focus:ring-2 focus:ring-white/50 w-full md:w-auto">
+                    <button
+                        class="bg-white text-primary px-6 py-2 rounded-r-button font-medium hover:bg-gray-100 transition-colors whitespace-nowrap">Подписаться</button>
+                </div>
+                <button
+                    class="absolute top-2 right-2 md:static md:ml-4 w-8 h-8 flex items-center justify-center text-white/80 hover:text-white"
+                    id="closeSubscribeBar">
+                    <i class="ri-close-line"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Промо-попап -->
+    <div class="promo-popup" id="promoPopup">
+        <div class="relative p-6">
+            <button
+                class="absolute top-2 right-2 w-6 h-6 flex items-center justify-center text-gray-500 hover:text-gray-700"
+                id="closePromoPopup">
+                <i class="ri-close-line"></i>
+            </button>
+            <div class="mb-4">
+                <span class="inline-block bg-primary/10 text-primary text-xs font-medium px-2 py-1 rounded">Специальное
+                    предложение</span>
+            </div>
+            <h3 class="text-lg font-semibold mb-2">Скидка 15% на все наборы</h3>
+            <p class="text-gray-600 text-sm mb-4">Используйте промокод <span class="font-semibold">CREPE15</span> при
+                оформлении заказа</p>
+            <a href="#catalog"
+                class="block bg-primary text-white py-2 px-4 rounded-button text-sm font-medium hover:bg-primary/90 transition-colors text-center whitespace-nowrap">Перейти
+                в каталог</a>
+        </div>
+    </div>
+    <!-- Кнопка быстрого заказа -->
+    <div class="back-to-top" id="backToTop" style="bottom: 80px;">
+        <i class="ri-arrow-up-line"></i>
+    </div>
+    <!-- Кнопка быстрого заказа -->
+    <div class="quick-order" id="quickOrder" style="bottom: 20px;">
+        <i class="ri-shopping-cart-2-line text-2xl"></i>
+    </div>
+    <!-- Модальное окно быстрого заказа -->
+    <div class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center" id="quickOrderModal">
+        <div class="bg-white rounded-lg max-w-md w-full mx-4 relative">
+            <button
+                class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-700"
+                id="closeQuickOrderModal">
+                <i class="ri-close-line"></i>
+            </button>
+            <div class="p-6">
+                <h3 class="text-2xl font-semibold mb-4">Быстрый заказ</h3>
+                <form id="quickOrderForm">
+                    <div class="mb-4">
+                        <label for="quickName" class="block text-gray-700 font-medium mb-2">Ваше имя</label>
+                        <input type="text" id="quickName"
+                            class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
+                            placeholder="Введите ваше имя">
+                    </div>
+                    <div class="mb-4">
+                        <label for="quickPhone" class="block text-gray-700 font-medium mb-2">Телефон</label>
+                        <input type="tel" id="quickPhone"
+                            class="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
+                            placeholder="+7 (___) ___-__-__">
+                    </div>
+                    <div class="mb-6">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="custom-checkbox" checked>
+                            <span class="ml-3 text-gray-700 text-sm">Я согласен с <a href="#"
+                                    class="text-primary hover:underline">условиями обработки персональных
+                                    данных</a></span>
+                        </label>
+                    </div>
+                    <button type="submit"
+                        class="w-full bg-primary text-white py-3 px-6 rounded-button text-lg font-medium hover:bg-primary/90 transition-colors whitespace-nowrap">Заказать
+                        звонок</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script id="mobileMenuScript">
+        document.addEventListener("DOMContentLoaded", function () {
+            const menuToggle = document.getElementById("menuToggle");
+            const menuClose = document.getElementById("menuClose");
+            const mobileMenu = document.getElementById("mobileMenu");
+            const mobileMenuLinks = mobileMenu.querySelectorAll("a");
+            menuToggle.addEventListener("click", function () {
+                mobileMenu.classList.remove("translate-x-full");
+            });
+            menuClose.addEventListener("click", function () {
+                mobileMenu.classList.add("translate-x-full");
+            });
+            mobileMenuLinks.forEach((link) => {
+                link.addEventListener("click", function () {
+                    mobileMenu.classList.add("translate-x-full");
+                });
+            });
+        });
+    </script>
+    <script id="scrollIndicatorScript">
+        document.addEventListener("DOMContentLoaded", function () {
+            const scrollIndicator = document.getElementById("scrollIndicator");
+            window.addEventListener("scroll", function () {
+                const winScroll =
+                    document.body.scrollTop || document.documentElement.scrollTop;
+                const height =
+                    document.documentElement.scrollHeight -
+                    document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                scrollIndicator.style.width = scrolled + "%";
+            });
+        });
+    </script>
+    <script id="categoryFilterScript">
+        document.addEventListener("DOMContentLoaded", function () {
+            const filterButtons = document.querySelectorAll(".category-filter");
+            const productCards = document.querySelectorAll(".product-card");
+            filterButtons.forEach((button) => {
+                button.addEventListener("click", () => {
+                    // Remove active class from all buttons
+                    filterButtons.forEach((btn) => {
+                        btn.classList.remove("bg-primary", "text-white");
+                        btn.classList.add(
+                            "bg-white",
+                            "text-gray-700",
+                            "border",
+                            "border-gray-200",
+                        );
+                    });
+                    // Add active class to clicked button
+                    button.classList.remove(
+                        "bg-white",
+                        "text-gray-700",
+                        "border",
+                        "border-gray-200",
+                    );
+                    button.classList.add("bg-primary", "text-white", "active");
+                    const category = button.getAttribute("data-category");
+                    // Filter products
+                    productCards.forEach((card) => {
+                        if (
+                            category === "all" ||
+                            card.getAttribute("data-category") === category
+                        ) {
+                            card.style.display = "block";
+                        } else {
+                            card.style.display = "none";
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+    <script id="backToTopScript">
+        document.addEventListener("DOMContentLoaded", function () {
+            const backToTopButton = document.getElementById("backToTop");
+            window.addEventListener("scroll", () => {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.add("visible");
+                } else {
+                    backToTopButton.classList.remove("visible");
+                }
+            });
+            backToTopButton.addEventListener("click", () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth",
+                });
+            });
+        });
+    </script>
+    <script id="quickOrderScript">
+        document.addEventListener("DOMContentLoaded", function () {
+            const quickOrderButton = document.getElementById("quickOrder");
+            const quickOrderModal = document.getElementById("quickOrderModal");
+            const closeQuickOrderModal = document.getElementById("closeQuickOrderModal");
+            const quickOrderForm = document.getElementById("quickOrderForm");
+            quickOrderButton.addEventListener("click", () => {
+                quickOrderModal.classList.remove("hidden");
+                quickOrderModal.classList.add("flex");
+                document.body.style.overflow = "hidden";
+            });
+            closeQuickOrderModal.addEventListener("click", () => {
+                quickOrderModal.classList.add("hidden");
+                quickOrderModal.classList.remove("flex");
+                document.body.style.overflow = "";
+            });
+            quickOrderModal.addEventListener("click", (e) => {
+                if (e.target === quickOrderModal) {
+                    quickOrderModal.classList.add("hidden");
+                    quickOrderModal.classList.remove("flex");
+                    document.body.style.overflow = "";
+                }
+            });
+            quickOrderForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                alert("Спасибо за заявку! Мы свяжемся с вами в ближайшее время.");
+                quickOrderModal.classList.add("hidden");
+                quickOrderModal.classList.remove("flex");
+                document.body.style.overflow = "";
+                quickOrderForm.reset();
+            });
+        });
+    </script>
+    <script id="promoPopupScript">
+        document.addEventListener("DOMContentLoaded", function () {
+            const promoPopup = document.getElementById("promoPopup");
+            const closePromoPopup = document.getElementById("closePromoPopup");
+            // Show popup after 5 seconds
+            setTimeout(() => {
+                promoPopup.classList.add("visible");
+            }, 5000);
+            closePromoPopup.addEventListener("click", () => {
+                promoPopup.classList.remove("visible");
+            });
+        });
+    </script>
+    <script id="subscribeBarScript">
+        document.addEventListener("DOMContentLoaded", function () {
+            const subscribeBar = document.getElementById("subscribeBar");
+            const closeSubscribeBar = document.getElementById("closeSubscribeBar");
+            // Show subscribe bar after 10 seconds
+            setTimeout(() => {
+                subscribeBar.classList.remove("translate-y-full");
+            }, 10000);
+            closeSubscribeBar.addEventListener("click", () => {
+                subscribeBar.classList.add("translate-y-full");
+            });
+        });
+    </script>
+    <script id="formValidationScript">
+        document.addEventListener("DOMContentLoaded", function () {
+            const orderForm = document.getElementById("orderForm");
+            if (orderForm) {
+                orderForm.addEventListener("submit", (e) => {
+                    e.preventDefault();
+                    // Simple validation
+                    const name = document.getElementById("name").value;
+                    const phone = document.getElementById("phone").value;
+                    const email = document.getElementById("email").value;
+                    const color = document.getElementById("color").value;
+                    const checkbox = orderForm.querySelector(".custom-checkbox").checked;
+                    if (!name || !phone || !email || !color || !checkbox) {
+                        alert(
+                            "Пожалуйста, заполните все обязательные поля и примите условия обработки персональных данных.",
+                        );
+                        return;
+                    }
+                    alert(
+                        "Спасибо за заказ! Мы свяжемся с вами в ближайшее время для подтверждения.",
+                    );
+                    orderForm.reset();
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

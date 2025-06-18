@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerHost - Мощные серверы для ваших проектов</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6c5ce7',
+                        secondary: '#a29bfe',
+                        accent: '#fd79a8',
+                        dark: '#1a1a2e',
+                        darker: '#16213e',
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(90deg, #6c5ce7 0%, #fd79a8 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .server-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s ease;
+        }
+        
+        .glow {
+            box-shadow: 0 0 15px rgba(108, 92, 231, 0.5);
+        }
+        
+        .feature-icon {
+            transition: all 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .animate-fadeIn {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        .animate-pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .animate-shake {
+            animation: shake 0.5s ease-in-out;
+        }
+        
+        .animate-rotate {
+            animation: rotate 2s linear infinite;
+        }
+        
+        .hover-grow {
+            transition: transform 0.3s ease;
+        }
+        
+        .hover-grow:hover {
+            transform: scale(1.05);
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
+            color: #fd79a8;
+        }
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-dark text-gray-200 font-sans">
+    <!-- Header -->
+    <header class="bg-darker sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <i class="fas fa-server text-3xl text-primary mr-3"></i>
+                    <span class="text-2xl font-bold gradient-text">PowerHost</span>
+                </div>
+                <nav class="hidden md:flex space-x-8 ml-auto">
+                    <a href="#features" class="hover:text-primary transition">Возможности</a>
+                    <a href="#pricing" class="hover:text-primary transition">Тарифы</a>
+                    <a href="#testimonials" class="hover:text-primary transition">Отзывы</a>
+                    <a href="#faq" class="hover:text-primary transition">FAQ</a>
+                </nav>
+                <div class="flex items-center">
+                    <button class="md:hidden text-2xl">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu hidden fixed inset-0 bg-black bg-opacity-90 z-50 overflow-y-auto">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex justify-between items-center mb-12">
+                <div class="flex items-center">
+                    <i class="fas fa-server text-3xl text-primary mr-3"></i>
+                    <span class="text-2xl font-bold gradient-text">PowerHost</span>
+                </div>
+                <button class="mobile-menu-close text-3xl text-gray-400 hover:text-white">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <nav class="flex flex-col space-y-6 text-xl">
+                <a href="#features" class="hover:text-primary transition py-2 border-b border-gray-800">Возможности</a>
+                <a href="#pricing" class="hover:text-primary transition py-2 border-b border-gray-800">Тарифы</a>
+                <a href="#testimonials" class="hover:text-primary transition py-2 border-b border-gray-800">Отзывы</a>
+                <a href="#faq" class="hover:text-primary transition py-2 border-b border-gray-800">FAQ</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-darker to-dark opacity-90"></div>
+        <div class="container mx-auto px-6 py-24 relative z-10">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-12 md:mb-0">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                        <span class="gradient-text">Мощные серверы</span><br>
+                        <span class="text-3xl md:text-5xl">для ваших амбиций</span>
+                    </h1>
+                    <p class="text-xl mb-8 text-gray-300">
+                        Высокопроизводительные серверы с 99.9% аптаймом. Размещайте свои проекты на оборудовании премиум-класса.
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <button onclick="document.getElementById('cta').scrollIntoView({behavior: 'smooth'})" class="px-8 py-4 rounded-lg bg-primary hover:bg-purple-700 transition-all duration-300 text-white font-bold text-lg glow hover:scale-105 active:scale-95 transform hover:-translate-y-1 active:translate-y-0 animate-pulse">
+                            Начать сейчас <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                        <button class="px-8 py-4 rounded-lg border border-primary text-primary hover:bg-darker transition-all duration-300 font-bold text-lg hover:scale-105 active:scale-95 transform hover:-translate-y-1 active:translate-y-0 hover:animate-shake">
+                            Узнать больше
+                        </button>
+                    </div>
+                    <div class="mt-8 flex items-center">
+                        <div class="flex -space-x-2">
+                            <img src="https://randomuser.me/api/portraits/women/12.jpg" class="w-10 h-10 rounded-full border-2 border-darker" alt="">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-10 h-10 rounded-full border-2 border-darker" alt="">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" class="w-10 h-10 rounded-full border-2 border-darker" alt="">
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm text-gray-400">Более <span class="font-bold text-primary">500+</span> довольных клиентов</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative w-full max-w-md">
+                        <div class="absolute top-0 left-0 w-64 h-64 bg-primary rounded-full filter blur-3xl opacity-20 animate-pulse-slow"></div>
+                        <div class="absolute bottom-0 right-0 w-64 h-64 bg-accent rounded-full filter blur-3xl opacity-20 animate-pulse-slow"></div>
+                        <img src="https://cdn-icons-png.flaticon.com/512/2885/2885425.png" class="relative z-10 w-full h-auto animate-float" alt="Server illustration">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trusted By -->
+    <section class="bg-darker py-12 mt-16">
+        <div class="container mx-auto px-6">
+            <p class="text-center text-gray-400 mb-8">Нам доверяют компании по всему миру</p>
+            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-16">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" class="h-8 opacity-70 hover:opacity-100 transition" alt="AWS">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" class="h-8 opacity-70 hover:opacity-100 transition" alt="Microsoft">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" class="h-8 opacity-70 hover:opacity-100 transition" alt="IBM">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" class="h-8 opacity-70 hover:opacity-100 transition" alt="Google">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" class="h-8 opacity-70 hover:opacity-100 transition" alt="Apple">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Почему выбирают <span class="gradient-text">PowerHost</span></h2>
+                <p class="text-xl text-gray-400 max-w-2xl mx-auto">Мы предлагаем лучшие технологии и поддержку для ваших проектов</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="feature-card bg-darker p-8 rounded-xl hover:shadow-xl transition relative hover-grow">
+                    <div class="absolute -top-3 right-4 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full">
+                        СКОРОСТЬ
+                    </div>
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-lg flex items-center justify-center mb-6">
+                        <i class="feature-icon fas fa-bolt text-3xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Молниеносная скорость</h3>
+                    <p class="text-gray-400">SSD-накопители NVMe и процессоры последнего поколения обеспечивают максимальную производительность.</p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="feature-card bg-darker p-8 rounded-xl hover:shadow-xl transition relative">
+                    <div class="absolute -top-3 right-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">
+                        БЕЗОПАСНОСТЬ
+                    </div>
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-lg flex items-center justify-center mb-6">
+                        <i class="feature-icon fas fa-shield-alt text-3xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Защита данных</h3>
+                    <p class="text-gray-400">Многоуровневая система безопасности, включая DDoS-защиту и ежедневное резервное копирование.</p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="feature-card bg-darker p-8 rounded-xl hover:shadow-xl transition relative">
+                    <div class="absolute -top-3 right-4 bg-secondary text-white text-xs font-bold px-3 py-1 rounded-full">
+                        ПОДДЕРЖКА
+                    </div>
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-lg flex items-center justify-center mb-6">
+                        <i class="feature-icon fas fa-headset text-3xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Поддержка 24/7</h3>
+                    <p class="text-gray-400">Наша команда экспертов доступна круглосуточно, чтобы помочь вам с любыми вопросами.</p>
+                </div>
+                
+                <!-- Feature 4 -->
+                <div class="feature-card bg-darker p-8 rounded-xl hover:shadow-xl transition relative">
+                    <div class="absolute -top-3 right-4 bg-gray-700 text-white text-xs font-bold px-3 py-1 rounded-full">
+                        ГИБКОСТЬ
+                    </div>
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-lg flex items-center justify-center mb-6">
+                        <i class="feature-icon fas fa-expand text-3xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Гибкое масштабирование</h3>
+                    <p class="text-gray-400">Увеличивайте или уменьшайте ресурсы сервера в несколько кликов без простоев.</p>
+                </div>
+                
+                <!-- Feature 5 -->
+                <div class="feature-card bg-darker p-8 rounded-xl hover:shadow-xl transition relative">
+                    <div class="absolute -top-3 right-4 bg-gray-700 text-white text-xs font-bold px-3 py-1 rounded-full">
+                        ГЛОБАЛЬНО
+                    </div>
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-lg flex items-center justify-center mb-6">
+                        <i class="feature-icon fas fa-globe text-3xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Глобальная сеть</h3>
+                    <p class="text-gray-400">Дата-центры в 12 странах мира для оптимальной задержки и доступности.</p>
+                </div>
+                
+                <!-- Feature 6 -->
+                <div class="feature-card bg-darker p-8 rounded-xl hover:shadow-xl transition relative">
+                    <div class="absolute -top-3 right-4 bg-gray-700 text-white text-xs font-bold px-3 py-1 rounded-full">
+                        КОНТРОЛЬ
+                    </div>
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-lg flex items-center justify-center mb-6">
+                        <i class="feature-icon fas fa-sliders-h text-3xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Полный контроль</h3>
+                    <p class="text-gray-400">Root-доступ, выбор ОС и полная кастомизация под ваши нужды.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="py-20 bg-darker">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Гибкие <span class="gradient-text">тарифные планы</span></h2>
+                <p class="text-xl text-gray-400 max-w-2xl mx-auto">Выберите оптимальное решение для вашего проекта</p>
+            </div>
+            
+            <div class="flex justify-center mb-8">
+                <div class="inline-flex bg-dark rounded-lg p-1">
+                    <button id="monthlyBtn" class="px-6 py-2 rounded-md bg-primary text-white">Ежемесячно</button>
+                    <button id="yearlyBtn" class="px-6 py-2 rounded-md text-gray-400 hover:text-white">Годовой (-20%)</button>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- Basic Plan -->
+                <div class="server-card bg-dark p-8 rounded-xl border border-gray-800 hover:border-primary transition duration-500 relative hover-grow">
+                    <div class="absolute -top-3 right-4 bg-gray-700 text-white text-xs font-bold px-3 py-1 rounded-full">
+                        БАЗОВЫЙ
+                    </div>
+                    <div class="mb-6">
+                        <h3 class="text-xl font-bold mb-2">Базовый</h3>
+                        <p class="text-gray-400">Идеально для небольших проектов</p>
+                    </div>
+                    <div class="mb-8">
+                        <span class="text-4xl font-bold"><span data-monthly>$19</span><span data-yearly class="hidden">$15</span></span>
+                        <span class="text-gray-400"><span data-monthly>/месяц</span><span data-yearly class="hidden">/месяц (оплата за год)</span></span>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            <span>2 vCPU ядра</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            <span>4GB RAM</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            <span>50GB SSD</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            <span>5TB трафика</span>
+                        </li>
+                        <li class="flex items-center text-gray-500">
+                            <i class="fas fa-times text-gray-500 mr-2"></i>
+                            <span>DDoS защита</span>
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 rounded-lg border border-primary text-primary hover:bg-primary hover:text-white transition font-medium transform hover:-translate-y-1 active:translate-y-0">
+                        Выбрать план
+                    </button>
+                </div>
+                
+                <!-- Pro Plan (Featured) -->
+                <div class="server-card bg-dark p-8 rounded-xl border-2 border-primary transform scale-105 shadow-lg transition duration-500 relative">
+                    <div class="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">
+                        ПОПУЛЯРНЫЙ
+                    </div>
+                    <div class="mb-6">
+                        <h3 class="text-xl font-bold mb-2">Профессиональный</h3>
+                        <p class="text-gray-400">Для растущего бизнеса</p>
+                    </div>
+                    <div class="mb-8">
+                        <span class="text-4xl font-bold"><span data-monthly>$49</span><span data-yearly class="hidden">$39</span></span>
+                        <span class="text-gray-400"><span data-monthly>/месяц</span><span data-yearly class="hidden">/месяц (оплата за год)</span></span>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            <span>4 vCPU ядра</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            <span>8GB RAM</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            <span>100GB SSD</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            <span>10TB трафика</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            <span>DDoS защита</span>
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 rounded-lg bg-primary hover:bg-purple-700 text-white transition font-medium glow transform hover:-translate-y-1 active:translate-y-0">
+                        Выбрать план
+                    </button>
+                </div>
+                
+                <!-- Enterprise Plan -->
+                <div class="server-card bg-dark p-8 rounded-xl border border-gray-800 hover:border-primary transition duration-500 relative">
+                    <div class="absolute -top-3 right-4 bg-gray-700 text-white text-xs font-bold px-3 py-1 rounded-full">
+                        ПРОФИ
+                    </div>
+                    <div class="mb-6">
+                        <h3 class="text-xl font-bold mb-2">Корпоративный</h3>
+                        <p class="text-gray-400">Для высоконагруженных проектов</p>
+                    </div>
+                    <div class="mb-8">
+                        <span class="text-4xl font-bold"><span data-monthly>$99</span><span data-yearly class="hidden">$79</span></span>
+                        <span class="text-gray-400"><span data-monthly>/месяц</span><span data-yearly class="hidden">/месяц (оплата за год)</span></span>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            <span>8 vCPU ядер</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            <span>16GB RAM</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            <span>200GB SSD</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            <span>20TB трафика</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-primary mr-2"></i>
+                            <span>Премиум DDoS защита</span>
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 rounded-lg border border-primary text-primary hover:bg-primary hover:text-white transition font-medium">
+                        Выбрать план
+                    </button>
+                </div>
+            </div>
+            
+            <div class="mt-16 text-center">
+                <p class="text-gray-400 mb-4">Нужен индивидуальный сервер?</p>
+                <button class="px-6 py-3 rounded-lg bg-transparent border border-primary text-primary hover:bg-primary hover:text-white transition font-medium transform hover:-translate-y-1 active:translate-y-0">
+                    Запросить кастомное решение
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Что говорят <span class="gradient-text">наши клиенты</span></h2>
+                <p class="text-xl text-gray-400 max-w-2xl mx-auto">Отзывы реальных пользователей наших серверов</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-darker p-8 rounded-xl hover-grow transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <img src="https://randomuser.me/api/portraits/women/32.jpg" class="w-12 h-12 rounded-full mr-4" alt="User">
+                        <div>
+                            <h4 class="font-bold">Анна Ковалева</h4>
+                            <p class="text-sm text-gray-400">CTO, TechStart</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">"Мы перевели все наши проекты на серверы PowerHost и сразу заметили разницу в скорости и стабильности. Поддержка всегда на связи и решает вопросы моментально."</p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="bg-darker p-8 rounded-xl hover-grow transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <img src="https://randomuser.me/api/portraits/men/54.jpg" class="w-12 h-12 rounded-full mr-4" alt="User">
+                        <div>
+                            <h4 class="font-bold">Дмитрий Смирнов</h4>
+                            <p class="text-sm text-gray-400">Разработчик игр</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">"За 3 года работы с разными хостингами только PowerHost обеспечил стабильный пинг для наших игровых серверов. Аптайм действительно 99.9% как заявлено."</p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="bg-darker p-8 rounded-xl hover-grow transition-all duration-300">
+                    <div class="flex items-center mb-6">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" class="w-12 h-12 rounded-full mr-4" alt="User">
+                        <div>
+                            <h4 class="font-bold">Елена Петрова</h4>
+                            <p class="text-sm text-gray-400">Владелец интернет-магазина</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">"После перехода на PowerHost скорость загрузки страниц нашего магазина увеличилась в 3 раза. Это сразу отразилось на конверсии и продажах. Очень довольна сервисом!"</p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="py-20 bg-darker">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Частые <span class="gradient-text">вопросы</span></h2>
+                <p class="text-xl text-gray-400 max-w-2xl mx-auto">Ответы на самые популярные вопросы о наших серверах</p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <!-- FAQ Item 1 -->
+                <div class="mb-6 border-b border-gray-800 pb-6 hover-grow transition-all duration-300">
+                    <button class="flex items-center justify-between w-full text-left">
+                        <h3 class="text-lg font-medium">Как быстро происходит развертывание сервера?</h3>
+                        <i class="fas fa-chevron-down text-primary transition-transform duration-300"></i>
+                    </button>
+                    <div class="mt-4 text-gray-400 hidden transition-all duration-300 ease-in-out">
+                        <p>Большинство наших серверов развертываются в течение 2-5 минут после оформления заказа. Вы получите данные для доступа сразу после активации.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 2 -->
+                <div class="mb-6 border-b border-gray-800 pb-6 hover-grow transition-all duration-300">
+                    <button class="flex items-center justify-between w-full text-left">
+                        <h3 class="text-lg font-medium">Можно ли изменить конфигурацию сервера после покупки?</h3>
+                        <i class="fas fa-chevron-down text-primary transition-transform duration-300"></i>
+                    </button>
+                    <div class="mt-4 text-gray-400 hidden">
+                        <p>Да, вы можете в любой момент увеличить или уменьшить ресурсы сервера (CPU, RAM, дисковое пространство) через панель управления. Изменения вступают в силу после перезагрузки сервера.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 3 -->
+                <div class="mb-6 border-b border-gray-800 pb-6 hover-grow transition-all duration-300">
+                    <button class="flex items-center justify-between w-full text-left">
+                        <h3 class="text-lg font-medium">Какие операционные системы доступны?</h3>
+                        <i class="fas fa-chevron-down text-primary transition-transform duration-300"></i>
+                    </button>
+                    <div class="mt-4 text-gray-400 hidden">
+                        <p>Мы предлагаем широкий выбор ОС: Ubuntu, Debian, CentOS, Fedora, Windows Server и другие. Также вы можете загрузить свой собственный образ.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 4 -->
+                <div class="mb-6 border-b border-gray-800 pb-6 hover-grow transition-all duration-300">
+                    <button class="flex items-center justify-between w-full text-left">
+                        <h3 class="text-lg font-medium">Как осуществляется резервное копирование?</h3>
+                        <i class="fas fa-chevron-down text-primary transition-transform duration-300"></i>
+                    </button>
+                    <div class="mt-4 text-gray-400 hidden">
+                        <p>Мы выполняем автоматическое ежедневное резервное копирование всех серверов. Резервные копии хранятся 7 дней. Вы также можете создавать ручные снапшоты в любое время.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 5 -->
+                <div class="mb-6 border-b border-gray-800 pb-6 hover-grow transition-all duration-300">
+                    <button class="flex items-center justify-between w-full text-left">
+                        <h3 class="text-lg font-medium">Какие способы оплаты вы принимаете?</h3>
+                        <i class="fas fa-chevron-down text-primary transition-transform duration-300"></i>
+                    </button>
+                    <div class="mt-4 text-gray-400 hidden">
+                        <p>Мы принимаем кредитные карты (Visa, Mastercard, Maestro), PayPal, криптовалюты (Bitcoin, Ethereum), а также банковские переводы для корпоративных клиентов.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center">
+                <p class="text-gray-400 mb-4">Не нашли ответ на свой вопрос?</p>
+                <button class="px-6 py-3 rounded-lg bg-primary hover:bg-purple-700 text-white transition font-medium transform hover:-translate-y-1 active:translate-y-0">
+                    Связаться с поддержкой
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="cta" class="py-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-primary to-accent opacity-10"></div>
+        <div class="container mx-auto px-6 relative">
+            <div class="bg-darker rounded-2xl p-8 md:p-12 shadow-xl">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-2/3 mb-8 md:mb-0">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-4">Готовы запустить свой проект?</h2>
+                        <p class="text-xl text-gray-400">Начните с 7-дневного бесплатного тестового периода. Без обязательств, без кредитной карты.</p>
+                    </div>
+                    <div class="md:w-1/3 flex justify-center md:justify-end">
+                        <button class="px-8 py-4 rounded-lg bg-primary hover:bg-purple-700 transition-all duration-300 text-white font-bold text-lg glow hover:scale-105 active:scale-95 transform hover:-translate-y-1 active:translate-y-0">
+                            Попробовать бесплатно <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-6">
+                        <i class="fas fa-server text-3xl text-primary mr-3"></i>
+                        <span class="text-2xl font-bold gradient-text">PowerHost</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">Мощные серверные решения для бизнеса любого масштаба.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-primary transition hover:animate-pulse"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition hover:animate-pulse"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition hover:animate-pulse"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition hover:animate-pulse"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Продукты</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">Виртуальные серверы</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">Выделенные серверы</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">Облачное хранилище</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">CDN</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">DDoS защита</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Компания</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">О нас</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">Блог</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">Карьера</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">Партнерская программа</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">Контакты</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Поддержка</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">База знаний</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">Сообщество</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">Статус серверов</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">Техническая поддержка</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition">Условия использования</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 mb-4 md:mb-0">© 2025 PowerHost. Все права защищены.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-500 hover:text-primary transition">Политика конфиденциальности</a>
+                    <a href="#" class="text-gray-500 hover:text-primary transition">Условия обслуживания</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Price toggle functionality
+        const monthlyBtn = document.getElementById('monthlyBtn');
+        const yearlyBtn = document.getElementById('yearlyBtn');
+        
+        monthlyBtn.addEventListener('click', () => {
+            monthlyBtn.classList.add('bg-primary', 'text-white');
+            monthlyBtn.classList.remove('text-gray-400');
+            yearlyBtn.classList.remove('bg-primary', 'text-white');
+            yearlyBtn.classList.add('text-gray-400');
+            
+            document.querySelectorAll('[data-monthly]').forEach(el => el.classList.remove('hidden'));
+            document.querySelectorAll('[data-yearly]').forEach(el => el.classList.add('hidden'));
+        });
+        
+        yearlyBtn.addEventListener('click', () => {
+            yearlyBtn.classList.add('bg-primary', 'text-white');
+            yearlyBtn.classList.remove('text-gray-400');
+            monthlyBtn.classList.remove('bg-primary', 'text-white');
+            monthlyBtn.classList.add('text-gray-400');
+            
+            document.querySelectorAll('[data-monthly]').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('[data-yearly]').forEach(el => el.classList.remove('hidden'));
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('#faq button').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.parentElement;
+                const content = faqItem.querySelector('div');
+                const icon = button.querySelector('i');
+                
+                content.classList.toggle('hidden');
+                icon.classList.toggle('transform');
+                icon.classList.toggle('rotate-180');
+            });
+        });
+        
+        // Mobile menu toggle
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileMenuBtn = document.querySelector('.md\\:hidden');
+        const mobileMenuCloseBtn = document.querySelector('.mobile-menu-close');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        mobileMenuCloseBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            document.body.style.overflow = '';
+        });
+        
+        // Close mobile menu when clicking on links
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                document.body.style.overflow = '';
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Animation on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fadeIn');
+                }
+            });
+        }, {threshold: 0.1});
+        
+        document.querySelectorAll('.server-card, .feature-card').forEach(card => {
+            observer.observe(card);
+            card.classList.add('transition-opacity', 'duration-500');
+        });
+        
+        document.querySelectorAll('.server-card, .feature-card').forEach(card => {
+            card.classList.add('opacity-100');
+        });
+
+        // Button click effects
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Ripple effect
+                const ripple = document.createElement('span');
+                ripple.className = 'ripple';
+                this.appendChild(ripple);
+                
+                // Get click position
+                const rect = this.getBoundingClientRect();
+                const x = event.clientX - rect.left;
+                const y = event.clientY - rect.top;
+                
+                // Position ripple
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+                
+                // Remove ripple after animation
+                setTimeout(() => {
+                    ripple.remove();
+                }, 1000);
+            });
+        });
+    </script>
+</body>
+</html>
